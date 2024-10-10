@@ -1,0 +1,1223 @@
+openapi: 3.0.0
+info:
+  title: Lifestyle Coach
+  description: "This API provides information about the Admin and their workflows."
+  version: 1.0.0
+  contact:
+    name: Lifestyle
+    email: "gtsdmanotifications@herbalife.com"
+servers:
+  - url: https://{environment}/api/v1/lifestyle/coach
+    variables:
+      environment:
+        default: dev01-herbalife.com
+        enum:
+          - dev01-herbalife.com
+tags:
+  - name: Admin
+    description: API for HN-Lifestyle-Coach
+security:
+  # - apiKeyAuth: []
+  - bearerAuth: []
+paths:
+  /cohorts:
+    get:
+      tags:
+        - Cohort
+      summary: Get Cohort
+      description: Get Cohort.
+      operationId: GetCohort1
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data:
+                      $ref: "#/components/schemas/CohortsResponse/properties/data"
+                    message:
+                      $ref: "#/components/schemas/CohortsResponse/properties/message"
+        "400":
+          description: Bad Request
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/BadRequestError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/BadRequestErrorBackend"
+  /cohorts/distributors/{distributorId}:
+    get:
+      tags:
+        - Cohort
+
+      summary: Get Cohort
+      description: Get Cohort.
+      operationId: GetCohort2
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/CohortsResponseByDistributerId/properties/data"
+                  message:
+                    $ref: "#/components/schemas/CohortsResponseByDistributerId/properties/message"
+  /cohorts/pending:
+    get:
+      tags:
+        - Cohort
+
+      summary: Get Cohort
+      description: Get Cohort.
+      operationId: GetCohort3
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/PendingCohortsResponse/properties/data"
+                  message:
+                    $ref: "#/components/schemas/PendingCohortsResponse/properties/message"
+  /cohorts/active:
+    get:
+      tags:
+        - Cohort
+
+      summary: Get Cohort
+      description: Get Cohort.
+      operationId: GetCohort4
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ActiveCohortsResponse/properties/data"
+                  message:
+                    $ref: "#/components/schemas/ActiveCohortsResponse/properties/message"
+  /cohorts/past:
+    get:
+      tags:
+        - Cohort
+
+      summary: Get Cohort
+      description: Get Cohort.
+      operationId: GetCohort5
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/PastCohortsResponse/properties/data"
+                  message:
+                    $ref: "#/components/schemas/PastCohortsResponse/properties/message"
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-apikey
+      description: x-apikey is used for authentication of each request.
+  parameters:
+    X-Global-TransactionId:
+      name: x-global-transaction-id
+      in: header
+      required: false
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+  headers:
+    X-Global-TransactionId:
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+      example: 850f36eb-f9f1-4510-acec-871b06c1da56
+      required: true
+  schemas:
+    CSRFData:
+      type: object
+      properties:
+        csrfToken:
+          type: string
+          format: uuid
+          example: 018b2f19-e79e-7d6a-a56d-29feb6211b04
+    CohortsResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Status message indicating successful retrieval.
+          example: "Cohorts Retrieved Successfully"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the cohort.
+                example: "670396f240325b6ec108d03a"
+              createdAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was created.
+                example: "2024-10-07T08:08:18.677Z"
+              updatedAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was last updated.
+                example: "2024-10-07T08:08:18.677Z"
+              name:
+                type: string
+                description: Name of the cohort.
+                example: "Team Bd"
+              startDate:
+                type: string
+                format: date-time
+                description: Start date of the cohort.
+                example: "2024-10-06T18:30:00Z"
+              endDate:
+                type: string
+                format: date-time
+                description: End date of the cohort.
+                example: "2025-10-06T18:30:00Z"
+              deliveryMode:
+                type: string
+                description: Mode of delivery for the cohort (e.g., ONLINE, OFFLINE).
+                example: "ONLINE"
+              cohortID:
+                type: integer
+                description: Unique identifier for the cohort.
+                example: 20
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Unique identifier for the participant.
+                      example: "6703863140325b6ec108d02e"
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was created.
+                      example: "2024-10-07T06:56:49.036Z"
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was last updated.
+                      example: "2024-10-07T06:56:49.036Z"
+                    firstName:
+                      type: string
+                      description: First name of the participant.
+                      example: "Parul"
+                    lastName:
+                      type: string
+                      description: Last name of the participant.
+                      example: "Joshi"
+                    email:
+                      type: string
+                      format: email
+                      description: Email address of the participant.
+                      example: "parul@yopmail.com"
+                    phone:
+                      type: string
+                      description: Phone number of the participant.
+                      example: "+1 987 456 3214"
+                    participantID:
+                      type: integer
+                      description: Unique identifier for the participant.
+                      example: 68
+                    distributor:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Unique identifier for the distributor.
+                          example: "66f57fb92846cb59882e42bb"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was created.
+                          example: "2024-09-26T15:37:29.629Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was last updated.
+                          example: "2024-09-26T15:37:29.629Z"
+                        firstName:
+                          type: string
+                          description: First name of the distributor.
+                          example: "Gajendra"
+                        lastName:
+                          type: string
+                          description: Last name of the distributor.
+                          example: "Mehra"
+                        email:
+                          type: string
+                          format: email
+                          description: Email address of the distributor.
+                          example: "null@herbalife.com"
+                        phone:
+                          type: string
+                          description: Phone number of the distributor.
+                          example: "+1 987 456 3225"
+                        coachID:
+                          type: integer
+                          description: Unique identifier for the coach associated with the distributor.
+                          example: 24
+                        cdcCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the CDC training.
+                          example: "2024-10-01T18:30:00Z"
+                        hngTrainingCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the HNG training.
+                          example: "2024-10-03T18:30:00Z"
+                        lastDateAttendedAdvancedTraining:
+                          type: string
+                          format: date-time
+                          description: Last date the distributor attended advanced training.
+                          example: "2024-10-23T18:30:00Z"
+                        deliveryMode:
+                          type: string
+                          description: Mode of delivery for the distributor (e.g., BOTH, ONLINE).
+                          example: "BOTH"
+                        location:
+                          type: string
+                          description: Location of the distributor.
+                          example: "USADD"
+                    magicLink:
+                      type: string
+                      description: Unique magic link for the participant.
+                      example: "a56b4298-783f-4f78-b64f-519b423c2351"
+                    enrolled:
+                      type: boolean
+                      description: Indicates whether the participant is enrolled.
+                      example: false
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: Error code is the code returned from the API
+        errorMessage:
+          type: string
+          description: Error message is the message returned from the API
+        errorDescription:
+          type: string
+          description: Error description is the description of the error returned from the API
+    CohortsResponseByDistributerId:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Status message indicating successful retrieval.
+          example: "Cohorts Retrieved Successfully Using Distributer Id"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the cohort.
+                example: "66f57fd52846cb59882e42bc"
+              createdAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was created.
+                example: "2024-09-26T15:37:57.175Z"
+              updatedAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was last updated.
+                example: "2024-09-26T15:37:57.175Z"
+              name:
+                type: string
+                description: Name of the cohort.
+                example: "Team A"
+              startDate:
+                type: string
+                format: date-time
+                description: Start date of the cohort.
+                example: "2024-09-25T18:30:00Z"
+              endDate:
+                type: string
+                format: date-time
+                description: End date of the cohort.
+                example: "2025-09-25T18:30:00Z"
+              deliveryMode:
+                type: string
+                description: Mode of delivery for the cohort (e.g., ONLINE, OFFLINE, BOTH).
+                example: "BOTH"
+              cohortID:
+                type: integer
+                description: Unique identifier for the cohort.
+                example: 15
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Unique identifier for the participant.
+                      example: "66f57ffb2846cb59882e42bd"
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was created.
+                      example: "2024-09-26T15:38:35.040Z"
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was last updated.
+                      example: "2024-09-26T15:38:35.040Z"
+                    firstName:
+                      type: string
+                      description: First name of the participant.
+                      example: "Laura"
+                    lastName:
+                      type: string
+                      description: Last name of the participant.
+                      example: "Sandoval"
+                    email:
+                      type: string
+                      format: email
+                      description: Email address of the participant.
+                      example: "laurasand+invite23@herbalife.com"
+                    phone:
+                      type: string
+                      description: Phone number of the participant.
+                      example: "+1 898 987 6789"
+                    participantID:
+                      type: integer
+                      description: Unique identifier for the participant.
+                      example: 62
+                    distributor:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Unique identifier for the distributor.
+                          example: "66f57fb92846cb59882e42bb"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was created.
+                          example: "2024-09-26T15:37:29.629Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was last updated.
+                          example: "2024-09-26T15:37:29.629Z"
+                        firstName:
+                          type: string
+                          description: First name of the distributor.
+                          example: "Gajendra"
+                        lastName:
+                          type: string
+                          description: Last name of the distributor.
+                          example: "Mehra"
+                        email:
+                          type: string
+                          format: email
+                          description: Email address of the distributor.
+                          example: "null@herbalife.com"
+                        phone:
+                          type: string
+                          description: Phone number of the distributor.
+                          example: "+1 987 456 3225"
+                        coachID:
+                          type: integer
+                          description: Unique identifier for the coach associated with the distributor.
+                          example: 24
+                        cdcCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the CDC training.
+                          example: "2024-10-01T18:30:00Z"
+                        hngTrainingCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the HNG training.
+                          example: "2024-10-03T18:30:00Z"
+                        lastDateAttendedAdvancedTraining:
+                          type: string
+                          format: date-time
+                          description: Last date the distributor attended advanced training.
+                          example: "2024-10-23T18:30:00Z"
+                        deliveryMode:
+                          type: string
+                          description: Mode of delivery for the distributor (e.g., BOTH, ONLINE).
+                          example: "BOTH"
+                        location:
+                          type: string
+                          description: Location of the distributor.
+                          example: "USADD"
+                    magicLink:
+                      type: string
+                      description: Unique magic link for the participant.
+                      example: "9b3e12c7-d345-4fc0-9fd9-9cb73d75307f"
+                    enrolled:
+                      type: boolean
+                      description: Indicates whether the participant is enrolled.
+                      example: false
+              distributor:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique identifier for the distributor.
+                    example: "66f57fb92846cb59882e42bb"
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the distributor was created.
+                    example: "2024-09-26T15:37:29.629Z"
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the distributor was last updated.
+                    example: "2024-09-26T15:37:29.629Z"
+                  firstName:
+                    type: string
+                    description: First name of the distributor.
+                    example: "Gajendra"
+                  lastName:
+                    type: string
+                    description: Last name of the distributor.
+                    example: "Mehra"
+                  email:
+                    type: string
+                    format: email
+                    description: Email address of the distributor.
+                    example: "null@herbalife.com"
+                  phone:
+                    type: string
+                    description: Phone number of the distributor.
+                    example: "+1 987 456 3225"
+                  coachID:
+                    type: integer
+                    description: Unique identifier for the coach associated with the distributor.
+                    example: 24
+                  cdcCompletionDate:
+                    type: string
+                    format: date-time
+                    description: Completion date for the CDC training.
+                    example: "2024-10-01T18:30:00Z"
+                  hngTrainingCompletionDate:
+                    type: string
+                    format: date-time
+                    description: Completion date for the HNG training.
+                    example: "2024-10-03T18:30:00Z"
+                  lastDateAttendedAdvancedTraining:
+                    type: string
+                    format: date-time
+                    description: Last date the distributor attended advanced training.
+                    example: "2024-10-23T18:30:00Z"
+                  deliveryMode:
+                    type: string
+                    description: Mode of delivery for the distributor (e.g., BOTH, ONLINE).
+                    example: "BOTH"
+                  location:
+                    type: string
+                    description: Location of the distributor.
+                    example: "USADD"
+    ActiveCohortsResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Status message indicating successful retrieval.
+          example: "Active Cohorts Retrieved Successfully"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the cohort.
+                example: "670396f240325b6ec108d03a"
+              createdAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was created.
+                example: "2024-10-07T08:08:18.677Z"
+              updatedAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was last updated.
+                example: "2024-10-07T08:08:18.677Z"
+              name:
+                type: string
+                description: Name of the cohort.
+                example: "Team Bd"
+              startDate:
+                type: string
+                format: date-time
+                description: Start date of the cohort.
+                example: "2024-10-06T18:30:00Z"
+              endDate:
+                type: string
+                format: date-time
+                description: End date of the cohort.
+                example: "2025-10-06T18:30:00Z"
+              deliveryMode:
+                type: string
+                description: Mode of delivery for the cohort (e.g., ONLINE, OFFLINE, BOTH).
+                example: "ONLINE"
+              cohortID:
+                type: integer
+                description: Unique identifier for the cohort.
+                example: 20
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Unique identifier for the participant.
+                      example: "6703863140325b6ec108d02e"
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was created.
+                      example: "2024-10-07T06:56:49.036Z"
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was last updated.
+                      example: "2024-10-07T06:56:49.036Z"
+                    firstName:
+                      type: string
+                      description: First name of the participant.
+                      example: "Parul"
+                    lastName:
+                      type: string
+                      description: Last name of the participant.
+                      example: "Joshi"
+                    email:
+                      type: string
+                      format: email
+                      description: Email address of the participant.
+                      example: "parul@yopmail.com"
+                    phone:
+                      type: string
+                      description: Phone number of the participant.
+                      example: "+1 987 456 3214"
+                    participantID:
+                      type: integer
+                      description: Unique identifier for the participant.
+                      example: 68
+                    distributor:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Unique identifier for the distributor.
+                          example: "66f57fb92846cb59882e42bb"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was created.
+                          example: "2024-09-26T15:37:29.629Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was last updated.
+                          example: "2024-09-26T15:37:29.629Z"
+                        firstName:
+                          type: string
+                          description: First name of the distributor.
+                          example: "Gajendra"
+                        lastName:
+                          type: string
+                          description: Last name of the distributor.
+                          example: "Mehra"
+                        email:
+                          type: string
+                          format: email
+                          description: Email address of the distributor.
+                          example: "null@herbalife.com"
+                        phone:
+                          type: string
+                          description: Phone number of the distributor.
+                          example: "+1 987 456 3225"
+                        coachID:
+                          type: integer
+                          description: Unique identifier for the coach associated with the distributor.
+                          example: 24
+                        cdcCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the CDC training.
+                          example: "2024-10-01T18:30:00Z"
+                        hngTrainingCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the HNG training.
+                          example: "2024-10-03T18:30:00Z"
+                        lastDateAttendedAdvancedTraining:
+                          type: string
+                          format: date-time
+                          description: Last date the distributor attended advanced training.
+                          example: "2024-10-23T18:30:00Z"
+                        deliveryMode:
+                          type: string
+                          description: Mode of delivery for the distributor (e.g., BOTH, ONLINE).
+                          example: "BOTH"
+                        location:
+                          type: string
+                          description: Location of the distributor.
+                          example: "USADD"
+                    magicLink:
+                      type: string
+                      description: Unique magic link for the participant.
+                      example: "a56b4298-783f-4f78-b64f-519b423c2351"
+                    enrolled:
+                      type: boolean
+                      description: Indicates whether the participant is enrolled.
+                      example: false
+              distributor:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique identifier for the distributor.
+                    example: "66ce3b4d8b130222373ac63b"
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the distributor was created.
+                    example: "2024-08-27T20:47:09.625Z"
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the distributor was last updated.
+                    example: "2024-08-27T20:47:09.625Z"
+                  firstName:
+                    type: string
+                    description: First name of the distributor.
+                    example: "Laura"
+                  lastName:
+                    type: string
+                    description: Last name of the distributor.
+                    example: "Sandoval"
+                  email:
+                    type: string
+                    format: email
+                    description: Email address of the distributor.
+                    example: "laurasand@herbalife.com"
+                  phone:
+                    type: string
+                    description: Phone number of the distributor.
+                    example: null
+                  coachID:
+                    type: integer
+                    description: Unique identifier for the coach associated with the distributor.
+                    example: 3
+                  cdcCompletionDate:
+                    type: string
+                    format: date-time
+                    description: Completion date for the CDC training.
+                    example: null
+                  hngTrainingCompletionDate:
+                    type: string
+                    format: date-time
+                    description: Completion date for the HNG training.
+                    example: null
+                  lastDateAttendedAdvancedTraining:
+                    type: string
+                    format: date-time
+                    description: Last date the distributor attended advanced training.
+                    example: null
+                  deliveryMode:
+                    type: string
+                    description: Mode of delivery for the distributor (e.g., BOTH, ONLINE).
+                    example: null
+                  location:
+                    type: string
+                    description: Location of the distributor.
+                    example: null
+    PendingCohortsResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Status message indicating successful retrieval.
+          example: "Pending Cohorts Retrieved Successfully"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the cohort.
+                example: "670396f240325b6ec108d03a"
+              createdAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was created.
+                example: "2024-10-07T08:08:18.677Z"
+              updatedAt:
+                type: string
+                format: date-time
+                description: Timestamp when the cohort was last updated.
+                example: "2024-10-07T08:08:18.677Z"
+              name:
+                type: string
+                description: Name of the cohort.
+                example: "Team Bd"
+              startDate:
+                type: string
+                format: date-time
+                description: Start date of the cohort.
+                example: "2024-10-06T18:30:00Z"
+              endDate:
+                type: string
+                format: date-time
+                description: End date of the cohort.
+                example: "2025-10-06T18:30:00Z"
+              deliveryMode:
+                type: string
+                description: Mode of delivery for the cohort (e.g., ONLINE, OFFLINE, BOTH).
+                example: "ONLINE"
+              cohortID:
+                type: integer
+                description: Unique identifier for the cohort.
+                example: 20
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Unique identifier for the participant.
+                      example: "6703863140325b6ec108d02e"
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was created.
+                      example: "2024-10-07T06:56:49.036Z"
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the participant was last updated.
+                      example: "2024-10-07T06:56:49.036Z"
+                    firstName:
+                      type: string
+                      description: First name of the participant.
+                      example: "Parul"
+                    lastName:
+                      type: string
+                      description: Last name of the participant.
+                      example: "Joshi"
+                    email:
+                      type: string
+                      format: email
+                      description: Email address of the participant.
+                      example: "parul@yopmail.com"
+                    phone:
+                      type: string
+                      description: Phone number of the participant.
+                      example: "+1 987 456 3214"
+                    participantID:
+                      type: integer
+                      description: Unique identifier for the participant.
+                      example: 68
+                    distributor:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Unique identifier for the distributor.
+                          example: "66f57fb92846cb59882e42bb"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was created.
+                          example: "2024-09-26T15:37:29.629Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the distributor was last updated.
+                          example: "2024-09-26T15:37:29.629Z"
+                        firstName:
+                          type: string
+                          description: First name of the distributor.
+                          example: "Gajendra"
+                        lastName:
+                          type: string
+                          description: Last name of the distributor.
+                          example: "Mehra"
+                        email:
+                          type: string
+                          format: email
+                          description: Email address of the distributor.
+                          example: "null@herbalife.com"
+                        phone:
+                          type: string
+                          description: Phone number of the distributor.
+                          example: "+1 987 456 3225"
+                        coachID:
+                          type: integer
+                          description: Unique identifier for the coach associated with the distributor.
+                          example: 24
+                        cdcCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the CDC training.
+                          example: "2024-10-01T18:30:00Z"
+                        hngTrainingCompletionDate:
+                          type: string
+                          format: date-time
+                          description: Completion date for the HNG training.
+                          example: "2024-10-03T18:30:00Z"
+                        lastDateAttendedAdvancedTraining:
+                          type: string
+                          format: date-time
+                          description: Last date the distributor attended advanced training.
+                          example: "2024-10-23T18:30:00Z"
+                        deliveryMode:
+                          type: string
+                          description: Mode of delivery for the distributor (e.g., BOTH, ONLINE).
+                          example: "BOTH"
+                        location:
+                          type: string
+                          description: Location of the distributor.
+                          example: "USADD"
+                    magicLink:
+                      type: string
+                      description: Unique magic link for the participant.
+                      example: "a56b4298-783f-4f78-b64f-519b423c2351"
+                    enrolled:
+                      type: boolean
+                      description: Indicates whether the participant is enrolled.
+                      example: false
+              distributor:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique identifier for the distributor.
+                    example: "66ce3b4d8b130222373ac63b"
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the distributor was created.
+                    example: "2024-08-27T20:47:09.625Z"
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the distributor was last updated.
+                    example: "2024-08-27T20:47:09.625Z"
+                  firstName:
+                    type: string
+                    description: First name of the distributor.
+                    example: "Laura"
+                  lastName:
+                    type: string
+                    description: Last name of the distributor.
+                    example: "Sandoval"
+                  email:
+                    type: string
+                    format: email
+                    description: Email address of the distributor.
+                    example: "laurasand@herbalife.com"
+                  phone:
+                    type: string
+                    description: Phone number of the distributor.
+                    example: null
+                  coachID:
+                    type: integer
+                    description: Unique identifier for the coach associated with the distributor.
+                    example: 3
+                  cdcCompletionDate:
+                    type: string
+                    format: date-time
+                    description: Completion date for the CDC training.
+                    example: null
+                  hngTrainingCompletionDate:
+                    type: string
+                    format: date-time
+                    description: Completion date for the HNG training.
+                    example: null
+                  lastDateAttendedAdvancedTraining:
+                    type: string
+                    format: date-time
+                    description: Last date the distributor attended advanced training.
+                    example: null
+                  deliveryMode:
+                    type: string
+                    description: Mode of delivery for the distributor (e.g., BOTH, ONLINE).
+                    example: null
+                  location:
+                    type: string
+                    description: Location of the distributor.
+                    example: null
+    PastCohortsResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Status message indicating successful retrieval.
+          example: "Past Cohorts Retrieved Successfully"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              data:
+                type: object
+          description: An empty array indicating that there are no past cohorts available.
+  # requestBodies:
+
+  examples:
+    # 400
+    BadRequestError:
+      value:
+        errorCode: APG0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    BadRequestErrorBackend:
+      value:
+        errorCode: BCK0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    # 401
+    ApiKeyError:
+      value:
+        errorCode: APG0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    ApiKeyErrorBackend:
+      value:
+        errorCode: BCK0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    # 403
+    Forbidden:
+      value:
+        errorCode: APG0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    ForbiddenBackend:
+      value:
+        errorCode: BCK0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    # 404
+    NotFound:
+      value:
+        errorCode: APG0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    NotFoundBackend:
+      value:
+        errorCode: BCK0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    # 405
+    MethodNotAllowed:
+      value:
+        errorCode: APG0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    MethodNotAllowedBackend:
+      value:
+        errorCode: BCK0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    # 406
+    NotAcceptable:
+      value:
+        errorCode: APG0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    NotAcceptableBackend:
+      value:
+        errorCode: BCK0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    # 408
+    RequestTimeout:
+      value:
+        errorCode: APG0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    RequestTimeoutBackend:
+      value:
+        errorCode: BCK0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    # 409
+    Conflict:
+      value:
+        errorCode: APG0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    ConflictBackend:
+      value:
+        errorCode: BCK0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    # 415
+    UnsupportedMediaType:
+      value:
+        errorCode: APG0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    UnsupportedMediaTypeBackend:
+      value:
+        errorCode: BCK0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    # 422
+    UnprocessableEntity:
+      value:
+        errorCode: APG0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    UnprocessableEntityBackend:
+      value:
+        errorCode: BCK0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    # 429
+    TooManyRequests:
+      value:
+        errorCode: APG0012
+        errorMessage: Too Many Requests
+        errorDescription: Request rate limit exceeded
+    TooManyRequestsBackend:
+      value:
+        errorCode: BCK0012
+        errorMessage: Too Many Requests
+        errorDescription: Request rate limit exceeded
+    # 500
+    InternalServerError:
+      value:
+        errorCode: APG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    InternalServerErrorBackend:
+      value:
+        errorCode: BCG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    # 501
+    NotImplemented:
+      value:
+        errorCode: APG0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    NotImplementedBackend:
+      value:
+        errorCode: BCK0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    # 502
+    BadGateway:
+      value:
+        errorCode: APG0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    BadGatewayBackend:
+      value:
+        errorCode: BCK0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    # 503
+    ServiceUnavailable:
+      value:
+        errorCode: APG0016
+        errorMessage: Service Unavailable
+        errorDescription: Server is not ready to handle the request
+    ServiceUnavailableBackend:
+      value:
+        errorCode: BCK0016
+        errorMessage: ServiceUnavailable
+        errorDescription: Server is not ready to handle the request
+    # 504
+    GatewayTimeout:
+      value:
+        errorCode: APG0017
+        errorMessage: Gateway Timeout
+        errorDescription: Gateway Timeout
+    GatewayTimeoutBackend:
+      value:
+        errorCode: BCK0017
+        errorMessage: Gateway Timeout
+        errorDescription: Server is not ready to handle the request

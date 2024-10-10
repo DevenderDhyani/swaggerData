@@ -1,0 +1,694 @@
+openapi: 3.0.0
+info:
+  title: Lifestyle Coach
+  description: "This API provides information about the distributor and their workflows."
+  version: 1.0.0
+  contact:
+    name: Lifestyle
+    email: "gtsdmanotifications@herbalife.com"
+servers:
+  - url: https://{environment}/api/v1/lifestyle/coach
+    variables:
+      environment:
+        default: dev01-herbalife.com
+        enum:
+          - dev01-herbalife.com
+tags:
+  - name: Distributors
+    description: Distributors API for HN-Lifestyle-Coach
+security:
+  - apiKeyAuth: []
+paths:
+  /distributors:
+    get:
+      tags:
+        - Distributors
+      summary: Get Distributors
+      description: Get all the distributors.
+      operationId: getDistributors
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Distributor"
+                  message:
+                    $ref: "#/components/schemas/Message"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+                Backend_ApiKeyError:
+                  $ref: "#/components/examples/Backend_ApiKeyError"
+        "404":
+          description: NotFound
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+                Backend_ApiKeyError:
+                  $ref: "#/components/examples/Backend_ApiKeyError"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+                Backend_InternalServerError:
+                  $ref: "#/components/examples/InternalServerErrorBackend"
+    post:
+      tags:
+        - Distributors
+      summary: Create Distributor
+      description: Create Distributor
+      operationId: createDistributor
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      requestBody:
+        $ref: "#/components/requestBodies/CreateDistributor"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Distributor"
+                  message:
+                    $ref: "#/components/schemas/Message"
+        "400":
+          description: BAD REQUEST
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                BadRequestError:
+                  $ref: "#/components/examples/BadRequestError"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+        "409":
+          description: CONFLICT
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                ConflictError:
+                  $ref: "#/components/examples/ConflictStatus"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+  /distributors/login:
+    post:
+      tags:
+        - Distributors
+      summary: Distributor Login
+      description: Distributor can login here using their credentials
+      operationId: distributorLogin
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      requestBody:
+        $ref: "#/components/requestBodies/LoginDistributor"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        $ref: "#/components/schemas/DistributorLoginToken"
+                  message:
+                    $ref: "#/components/schemas/Message"
+
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+  /distributors/{id}:
+    get:
+      tags:
+        - Distributors
+      summary: Get A Distributors
+      description: Get A Distributors by ID
+      operationId: getADistributors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the distributor to retrieve.
+          schema:
+            type: string
+            description: The ID of the distributor to retrieve.
+            example: 507f191e810c19729de860ea
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Distributor"
+                  message:
+                    $ref: "#/components/schemas/Message"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+    put:
+      tags:
+        - Distributors
+      summary: Update Distributor
+      description: Update Distributor by ID
+      operationId: updateDistributor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the distributor to retrieve.
+          schema:
+            type: string
+            description: The ID of the distributor to retrieve.
+            example: 507f191e810c19729de860ea
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateDistributor"
+        required: false
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Distributor"
+                  message:
+                    $ref: "#/components/schemas/Message"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+
+  /distributors/csrf-token:
+    get:
+      tags:
+        - Distributors
+      summary: Get CSRF Token
+      description: Generates a CSRF token for the distributor.
+      operationId: getCsrfToken
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/CSRFData"
+                  message:
+                    $ref: "#/components/schemas/Message"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+        "403":
+          description: Forbidden
+          headers:
+            x-global-transaction-id:
+              $ref: "#components/schemas/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_Forbidden:
+                  $ref: "#/components/examples/Forbidden"
+                Backend_Forbidden:
+                  $ref: "#/components/examples/ForbiddenBackend"
+        "409":
+          description: ConflictStatus
+          headers:
+            x-global-transaction-id:
+              $ref: "#components/schemas/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/examples/ConflictStatus"
+              examples:
+                ConflictStatus:
+                  $ref: "#/components/examples/ConflictStatus"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-apikey
+      description: x-apikey is used for authentication of each request.
+  parameters:
+    X-Global-TransactionId:
+      name: x-global-transaction-id
+      in: header
+      required: false
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+  headers:
+    X-Global-TransactionId:
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+      example: 850f36eb-f9f1-4510-acec-871b06c1da56
+  schemas:
+    CSRFData:
+      type: object
+      properties:
+        csrfToken:
+          type: string
+          format: uuid
+          example: 018b2f19-e79e-7d6a-a56d-29feb6211b04
+    Distributor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: uuid which is the id of the distributor.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        cdcCompletionDate:
+          type: string
+          nullable: true
+          description: cdcCompletionDate is the date when the distributor completed CDC (Controlled Document Compliance) training.
+          example: 2024-09-19T18:30:00Z
+        coachID:
+          type: number
+          description: coachID is the id of the coach assigned to the distributor.
+          example: 1
+        createdAt:
+          type: string
+          description: createdAt is the date when the distributor was created.
+          example: 2024-08-22T15:17:07.910Z
+        deliveryMode:
+          type: string
+          nullable: true
+          description: deliveryMode is the mode of delivery for the distributor's training.
+          example: OFFLINE
+        email:
+          type: string
+          format: email
+          description: email is the email of the distributor.
+          example: johndoe@herbalife.com
+        firstName:
+          type: string
+          description: firstName is the first name of the distributor.
+          example: john
+        hngTrainingCompletionDate:
+          type: string
+          nullable: true
+          description: hngTrainingCompletionDate is the date when the distributor completed HNG (Health and Nutrition Guidance) training.
+          example: 2024-09-29T18:30:00Z
+        lastDateAttendedAdvancedTraining:
+          type: string
+          nullable: true
+          description: lastDateAttendedAdvancedTraining is the date when the distributor last attended advanced training.
+          example: 2024-09-27T18:30:00Z
+        lastName:
+          type: string
+          description: lastName is the last name of the distributor.
+          example: Doe
+        location:
+          type: string
+          nullable: true
+          description: location is the location of the distributor.
+          example: Texas
+        phone:
+          type: string
+          nullable: true
+          description: phone is the phone number of the distributor.
+          example: +1 741 258 0000
+        updatedAt:
+          type: string
+          description: updatedAt is the date when the distributor was last updated.
+          example: 2024-08-22T15:17:07.910Z
+    Message:
+      type: string
+      description: Message is the message returned from the API
+      nullable: true
+
+    DistributorLoginToken:
+      type: string
+      description: token for authentication of the distributor.
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLm15aGVyYmFsaWZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vaGVyYmFsaWZlbGlmZXN0eWxlLmNvbSIsInN1YiI6IlVTQVRFU1QzMjRAaGVyYmFsaWZlLmNvbSIsImlkIjoiNjZmNTIxYTllMzUzZDQwNGU5ZWQyYWE5IiwiZmlyc3ROYW1lIjoiLSIsImxhc3ROYW1lIjoiLSIsImVtYWlsIjoiVVNBVEVTVDMyNEBoZXJiYWxpZmUuY29tIiwiZXhwIjoxNzI3NDI3MzY5LCJpYXQiOjE3MjczNDA5NjksIm5iZiI6MTcyNzM0MDk2OSwianRpIjoiMTIzNDUifQ.7xEtNLhcZ2Nsjf7iWE6vKqU_jw4DQ7LHUhXRihjWtiE
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: Error code is the code returned from the API
+        errorMessage:
+          type: string
+          description: Error message is the message returned from the API
+        errorDescription:
+          type: string
+          description: Error description is the description of the error returned from the API
+  requestBodies:
+    CreateDistributor:
+      description: Create Distributor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: email of the distributor.
+                example: johndoe@herbalife.com
+              firstName:
+                type: string
+                description: first name of the distributor.
+                example: John
+              lastName:
+                type: string
+                description: last name of the distributor.
+                example: Doe
+              phone:
+                type: string
+                description: phone number of the distributor.
+                example: "9310008439"
+            required:
+              - email
+              - firstName
+              - lastName
+
+      required: true
+    LoginDistributor:
+      description: Login Distributor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                $ref: "#/components/schemas/DistributorLoginToken"
+      required: true
+    UpdateDistributor:
+      description: Update Distributor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                description: first name of the distributor.
+                example: John
+              lastName:
+                type: string
+                description: last name of the distributor.
+                example: Doe
+              cdcCompletionDate:
+                type: string
+                description: cdcCompletionDate is the date when the distributor completed CDC training.
+                example: 2024-06-28T05:46:04.894+00:00
+              deliveryMode:
+                type: string
+                description: deliveryMode is the mode of delivery for the distributor's training.
+                example: OFFLINE
+              hngTrainingCompletionDate:
+                type: string
+                description: hngTrainingCompletionDate is the date when the distributor completed HNG (Health and Nutrition Guidance) training.
+                example: 2024-06-28T05:46:04.894+00:00
+              lastDateAttendedAdvancedTraining:
+                type: string
+                description: lastDateAttendedAdvancedTraining is
+                 the date when the distributor last attended advanced training.
+                example: 2024-06-28T05:46:04.894+00:00
+              location:
+                type: string
+                description: The location of the distributor.
+                example: California
+  examples:
+    BadRequestError:
+      value:
+        errorCode: APG0001
+        errorMessage: ValidationError
+        errorDescription: Input validation error. Provide a valid input data!
+    BadRequestErrorBackend:
+      value:
+        errorCode: G0001
+        errorMessage: ValidationError
+        errorDescription: Input validation error. Provide a valid input data!
+    ApiKeyError:
+      value:
+        errorCode: APG0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    Backend_ApiKeyError:
+      value:
+        errorCode: BCG0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+
+    Forbidden:
+      value:
+        errorCode: APG0003
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+
+    ForbiddenBackend:
+      value:
+        errorCode: BCG0003
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    MethodNotAllowed:
+      value:
+        errorCode: APG0004
+        errorMessage: MethodNotAllowed
+        errorDescription: Provide a valid method
+    MethodNotAllowedBackend:
+      value:
+        errorCode: BCG0004
+        errorMessage: MethodNotAllowed
+        errorDescription: Provide a valid method
+    ConflictStatus:
+      value:
+        errorCode: APG0005
+        errorMessage: ConflictStatus
+        errorDescription: Conflict while updating existing resouce
+    ConflictStatusBackend:
+      value:
+        errorCode: BCG0005
+        errorMessage: ConflictStatus
+        errorDescription: Conflict while updating existing resouce
+    SemanticErrors:
+      value:
+        errorCode: APG0006
+        errorMessage: SemanticErrors
+        errorDescription: Unable to process the entity.
+    TooManyRequests:
+      value:
+        errorCode: APG0007
+        errorMessage: TooManyRequests
+        errorDescription: Request rate limit exceeded
+    InternalServerError:
+      value:
+        errorCode: APG0008
+        errorMessage: InternalServerError
+        errorDescription: Internal Server Error
+    InternalServerErrorBackend:
+      value:
+        errorCode: BCG0008
+        errorMessage: InternalServerError
+        errorDescription: Internal Server Error
+    BadGateway:
+      value:
+        errorCode: APG0009
+        errorMessage: BadGateway
+        errorDescription: Bad response from backend
+    BadGatewayBackend:
+      value:
+        errorCode: APG0009
+        errorMessage: BadGateway
+        errorDescription: Bad response from backend
+    ServiceUnavailable:
+      value:
+        errorCode: APG0010
+        errorMessage: ServiceUnavailable
+        errorDescription: Server is not ready to handle the request
+    ServiceUnavailableBackend:
+      value:
+        errorCode: APG0010
+        errorMessage: ServiceUnavailable
+        errorDescription: Server is not ready to handle the request

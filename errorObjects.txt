@@ -1,0 +1,239 @@
+  400: {
+    statusText: "Bad Request",
+    errorCode: "BCK0001",
+  },
+  401: {
+    statusText: "Unauthorized",
+    errorCode: "BCK0002",
+  },
+  403: {
+    statusText: "Forbidden",
+    errorCode: "BCK0004",
+  },
+  404: {
+    statusText: "Not Found",
+    errorCode: "BCK0003",
+  },
+  405: {
+    statusText: "Method Not Allowed",
+    errorCode: "BCK0005",
+  },
+  406: {
+    statusText: "Not Acceptable",
+    errorCode: "BCK0006",
+  },
+  408: {
+    statusText: "Request Timeout",
+    errorCode: "BCK0008",
+  },
+  409: {
+    statusText: "Conflict",
+    errorCode: "BCK0009",
+  },
+  415: {
+    statusText: "Unsupported Media Type",
+    errorCode: "BCK0010",
+  },
+  422: {
+    statusText: "Unprocessable Entity",
+    errorCode: "BCK0011",
+  },
+  429: {
+    statusText: "Too Many Requests",
+    errorCode: "BCK0012",
+  },
+  500: {
+    statusText: "Internal Server Error",
+    errorCode: "BCK0013",
+  },
+  501: {
+    statusText: "Not Implemented",
+    errorCode: "BCK0014",
+  },
+  502: {
+    statusText: "Bad Gateway",
+    errorCode: "BCK0015",
+  },
+  503: {
+    statusText: "Service Unavailable",
+    errorCode: "BCK0016",
+  },
+  504: {
+    statusText: "Gateway Timeout",
+    errorCode: "BCK0017",
+  }
+
+
+
+    # 400
+  BadRequestError:
+      value:
+        errorCode: APG0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    BadRequestErrorBackend:
+      value:
+        errorCode: BCK0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    # 401
+    ApiKeyError:
+      value:
+        errorCode: APG0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    ApiKeyErrorBackend:
+      value:
+        errorCode: BCK0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    # 403
+    Forbidden:
+      value:
+        errorCode: APG0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    ForbiddenBackend:
+      value:
+        errorCode: BCG0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    # 404
+    NotFound:
+      value:
+        errorCode: APG0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    NotFoundBackend:
+      value:
+        errorCode: BCK0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    # 405
+    MethodNotAllowed:
+      value:
+        errorCode: APG0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    MethodNotAllowedBackend:
+      value:
+        errorCode: BCK0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    # 406
+    NotAcceptable:
+      value:
+        errorCode: APG0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    NotAcceptableBackend:
+      value:
+        errorCode: BCK0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    # 408
+    RequestTimeout:
+      value:
+        errorCode: APG0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    RequestTimeoutBackend:
+      value:
+        errorCode: BCK0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    # 409
+    Conflict:
+      value:
+        errorCode: APG0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    ConflictBackend:
+      value:
+        errorCode: BCK0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    # 415
+    UnsupportedMediaType:
+      value:
+        errorCode: APG0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    UnsupportedMediaTypeBackend:
+      value:
+        errorCode: BCK0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    # 422
+    UnprocessableEntity:
+      value:
+        errorCode: APG0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    UnprocessableEntityBackend:
+      value:
+        errorCode: BCK0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    # 429
+    TooManyRequests:
+      value:
+        errorCode: APG0012
+        errorMessage: Unprocessable Entity
+        errorDescription: Request rate limit exceeded
+    TooManyRequestsBackend:
+      value:
+        errorCode: BCK0012
+        errorMessage: Too Many Requests
+        errorDescription: Request rate limit exceeded
+    # 500
+    InternalServerError:
+      value:
+        errorCode: APG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    InternalServerErrorBackend:
+      value:
+        errorCode: BCG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    # 501
+    NotImplemented:
+      value:
+        errorCode: APG0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    NotImplementedBackend:
+      value:
+        errorCode: BCK0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    # 502
+    BadGateway:
+      value:
+        errorCode: APG0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    BadGatewayBackend:
+      value:
+        errorCode: BCK0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    # 503
+    ServiceUnavailable:
+      value:
+        errorCode: APG0016
+        errorMessage: Service Unavailable
+        errorDescription: Server is not ready to handle the request
+    ServiceUnavailableBackend:
+      value:
+        errorCode: BCK0016
+        errorMessage: ServiceUnavailable
+        errorDescription: Server is not ready to handle the request
+    # 504
+    GatewayTimeout:
+      value:
+        errorCode: APG0017
+        errorMessage: Gateway Timeout
+        errorDescription: Gateway Timeout
+    GatewayTimeoutBackend:

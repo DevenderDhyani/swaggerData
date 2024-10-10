@@ -1,0 +1,1267 @@
+openapi: 3.0.3
+info:
+  title: lifestyle-program-apis
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: "distributors"
+  - url: ""
+  - url: "participants"
+  - url: |-
+      https://34.120.173.15.nip.io/herbalife-lifestyle-program-admin
+      admin
+  - url: "cohorts"
+  - url: "records"
+  - url: |-
+      https://34.120.173.15.nip.io/herbalife-lifestyle-program-admin
+      records
+  - url: |-
+      https://34.120.173.15.nip.io/herbalife-lifestyle-program-admin
+      sessions
+  - url: "sessions"
+  - url: http://localhost
+  - url: "search"
+  - url: |-
+      https://34.120.173.15.nip.io/herbalife-lifestyle-program-admin
+      question
+  - url: "api"
+  - url: |-
+      https://34.120.173.15.nip.io/herbalife-lifestyle-program-admin
+      catalog
+  - url: |
+      https://34.120.173.15.nip.io/herbalife-lifestyle-program-admin
+  - url: |-
+      https://34.120.173.15.nip.io/herbalife-lifestyle-program-admin
+      cohorts
+paths:
+  /{id}:
+    get:
+      tags:
+        - admin-apis
+        - catalogs
+      summary: get-a-catalog
+      description: get-a-catalog
+      operationId: getACatalog
+      responses:
+        "200":
+          description: ""
+    put:
+      tags:
+        - admin-apis
+        - catalogs
+      summary: update
+      description: update
+      operationId: update4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Sex
+                values:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      Female:
+                        type: string
+                        example: "2"
+                      Male:
+                        type: string
+                        example: "1"
+                  example:
+                    - Male: "1"
+                    - Female: "2"
+            example:
+              title: Sex
+              values:
+                - Male: "1"
+                - Female: "2"
+      responses:
+        "200":
+          description: ""
+    delete:
+      tags:
+        - admin-apis
+        - catalogs
+      summary: delete
+      description: delete
+      operationId: delete2
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66797d5b95741c4dbc178885
+  /login:
+    post:
+      tags:
+        - admin-apis
+      summary: login
+      description: login
+      operationId: login1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: >-
+                    eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlhXM3F6SWFjQjg5U2NLdmpkOGpva28ybUllWSJ9.eyJ2ZXIiOiIyLjAiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOTE4ODA0MGQtNmM2Ny00YzViLWIxMTItMzZhMzA0YjY2ZGFkL3YyLjAiLCJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFJeWdMZjhmYmxyc0ZTamdiaGlQUUNzIiwiYXVkIjoiYjM1ZTlkOTQtNjAzMC00YmVlLTk0ZWEtZGU5MTM3YmRmNzNiIiwiZXhwIjoxNzI2Njc0MzQwLCJpYXQiOjE3MjY1ODc2NDAsIm5iZiI6MTcyNjU4NzY0MCwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2FqZW5kcmEubWVocmFAdGhld2l0c2xhYi5jb20iLCJvaWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMWI2NS1mYjI2OGZhMjg5N2QiLCJ0aWQiOiI5MTg4MDQwZC02YzY3LTRjNWItYjExMi0zNmEzMDRiNjZkYWQiLCJub25jZSI6IjAxOTIwMGE5LTE0MjEtN2MxZi1hN2Q1LTQ4NWRhMzYwY2U2MiIsImFpbyI6IkRuT0xUc25GRzdpMWJaUDhvWVF4UlJWRiF3KjhMKkVtM2dIcVNvaGR2Q3hQcXhSYmZwSlUhWDY5U09kaFhqRGs5aVc1c3FtTEVnaG5WenB2TU0xUUhEY2tVS05TWlZNWUlKNDVDa1Zzeml0bXdhaGlBbnFzbCptdHVYdHZ0R1lzNkFCUUFXOGlrbVBMdGJpKjJ5OGFITlRkRTdhUDlQQ2FBSDQySTBsd1Y3a0IifQ.HdgnFftRBC5mnwrk_aE2cg5M5lSMgFA2ONHB_XUyuK09JCtROQpGQAAH9bekoFhOrLwXw3j1OYT8UtCbZ8aZIty6ZgVW3rhjYaTFsc8GzD0bjNtow1Njfnqr6bjGGZ0KpL21sNn_Mk8ud2zK1OtRSlR3pqpV-TuQzReZJsAylkwNNYIUpF0KWIJctDmiczlVmfooBeiOFkDAiDeUh4E14ZD7Pht3joBIHQBJntFK02LeiyoN9OlqnAcgKgedoWGd_AHXU9GhvB1n3B8JkQt358QROPKTy6SWMPHVABpON0wEaySXrT_NjYMR5-SbJvAIMyzvwL6_qm68T4-d-VJ2oQ
+            example:
+              code: >-
+                eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlhXM3F6SWFjQjg5U2NLdmpkOGpva28ybUllWSJ9.eyJ2ZXIiOiIyLjAiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOTE4ODA0MGQtNmM2Ny00YzViLWIxMTItMzZhMzA0YjY2ZGFkL3YyLjAiLCJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFJeWdMZjhmYmxyc0ZTamdiaGlQUUNzIiwiYXVkIjoiYjM1ZTlkOTQtNjAzMC00YmVlLTk0ZWEtZGU5MTM3YmRmNzNiIiwiZXhwIjoxNzI2Njc0MzQwLCJpYXQiOjE3MjY1ODc2NDAsIm5iZiI6MTcyNjU4NzY0MCwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2FqZW5kcmEubWVocmFAdGhld2l0c2xhYi5jb20iLCJvaWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMWI2NS1mYjI2OGZhMjg5N2QiLCJ0aWQiOiI5MTg4MDQwZC02YzY3LTRjNWItYjExMi0zNmEzMDRiNjZkYWQiLCJub25jZSI6IjAxOTIwMGE5LTE0MjEtN2MxZi1hN2Q1LTQ4NWRhMzYwY2U2MiIsImFpbyI6IkRuT0xUc25GRzdpMWJaUDhvWVF4UlJWRiF3KjhMKkVtM2dIcVNvaGR2Q3hQcXhSYmZwSlUhWDY5U09kaFhqRGs5aVc1c3FtTEVnaG5WenB2TU0xUUhEY2tVS05TWlZNWUlKNDVDa1Zzeml0bXdhaGlBbnFzbCptdHVYdHZ0R1lzNkFCUUFXOGlrbVBMdGJpKjJ5OGFITlRkRTdhUDlQQ2FBSDQySTBsd1Y3a0IifQ.HdgnFftRBC5mnwrk_aE2cg5M5lSMgFA2ONHB_XUyuK09JCtROQpGQAAH9bekoFhOrLwXw3j1OYT8UtCbZ8aZIty6ZgVW3rhjYaTFsc8GzD0bjNtow1Njfnqr6bjGGZ0KpL21sNn_Mk8ud2zK1OtRSlR3pqpV-TuQzReZJsAylkwNNYIUpF0KWIJctDmiczlVmfooBeiOFkDAiDeUh4E14ZD7Pht3joBIHQBJntFK02LeiyoN9OlqnAcgKgedoWGd_AHXU9GhvB1n3B8JkQt358QROPKTy6SWMPHVABpON0wEaySXrT_NjYMR5-SbJvAIMyzvwL6_qm68T4-d-VJ2oQ
+      responses:
+        "200":
+          description: ""
+  /csrf-token:
+    get:
+      tags:
+        - user-apis
+        - distributors
+      summary: CSRF token
+      description: CSRF token
+      operationId: csrfToken
+      responses:
+        "200":
+          description: ""
+  /{id}/activities:
+    get:
+      tags:
+        - user-apis
+        - participants
+        - activity
+      summary: get-participant-activities
+      description: get-participant-activities
+      operationId: getParticipantActivities
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66d291832d88a609fe82419b
+  /{participantsId}/activity:
+    post:
+      tags:
+        - user-apis
+        - participants
+        - activity
+      summary: save-participant-activity
+      description: save-participant-activity
+      operationId: saveParticipantActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  example: "2024-11-26T05:46:04.894+00:00"
+                magicLink:
+                  type: string
+                  example: 8b7ab820-b898-4a7d-80ab-f125c28d97a3
+                minutes:
+                  type: string
+                  example: "103"
+                sessionId:
+                  type: string
+                  example: 66d1bf1302d6bf5b9b8fcf16
+                weight:
+                  type: string
+                  example: "90"
+            example:
+              date: "2024-11-26T05:46:04.894+00:00"
+              magicLink: 8b7ab820-b898-4a7d-80ab-f125c28d97a3
+              minutes: "103"
+              sessionId: 66d1bf1302d6bf5b9b8fcf16
+              weight: "90"
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: participantsId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66d1a7f702d6bf5b9b8fcf10
+  /{id}/activity:
+    get:
+      tags:
+        - user-apis
+        - participants
+        - activity
+      summary: get-participant-activity
+      description: get-participant-activity
+      operationId: getParticipantActivity
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66d2d72dd1156b73ce6bbc3d
+  /activity/66d2d746d1156b73ce6bbc3d:
+    put:
+      tags:
+        - user-apis
+        - participants
+        - activity
+      summary: update-participant-activity
+      description: update-participant-activity
+      operationId: updateParticipantActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                minutes:
+                  type: string
+                  example: "105"
+                weight:
+                  type: string
+                  example: "99"
+            example:
+              minutes: "105"
+              weight: "99"
+      responses:
+        "200":
+          description: ""
+  /activity/{activityId}:
+    delete:
+      tags:
+        - user-apis
+        - participants
+        - activity
+      summary: delete-participant-activity
+      description: delete-participant-activity
+      operationId: deleteParticipantActivity
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: activityId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: ""
+  /activities/session/{sessionId}:
+    get:
+      tags:
+        - user-apis
+        - participants
+        - activity
+      summary: get-activities-by-session-id
+      description: get-activities-by-session-id
+      operationId: getActivitiesBySessionId
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: ""
+  /distributors:
+    get:
+      tags:
+        - admin-apis
+        - distributors1
+      summary: get
+      description: get
+      operationId: get
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+        - name: size
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /questions:
+    get:
+      tags:
+        - user-apis
+        - participants
+      summary: get-published-questions
+      description: get-published-questions
+      operationId: getPublishedQuestions
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        "200":
+          description: ""
+  /getByMagicLink/{magicLink}:
+    get:
+      tags:
+        - user-apis
+        - participants
+      summary: get-by-magicLink
+      description: get-by-magicLink
+      operationId: getByMagiclink
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: magicLink
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 55f8e06d-7d94-4c4e-8c02-7f62dffac679
+  /{id}/status:
+    get:
+      tags:
+        - user-apis
+        - participants
+      summary: get-participant-status
+      description: get-participant-status
+      operationId: getParticipantStatus
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 6696418142a5e718372eaca1
+  /status/66d738643e349243c2993ed0:
+    get:
+      tags:
+        - user-apis
+        - participants
+      summary: get-all-participant-statuses
+      description: get-all-participant-statuses
+      operationId: getAllParticipantStatuses
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+        - name: size
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /sendEmail/{magicLink}:
+    post:
+      tags:
+        - user-apis
+        - participants
+      summary: send-email
+      description: send-email
+      operationId: sendEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: >-
+                    https://herbalife-lifestyle-program-user-dev.thewitslab.com/participant/24ecd8cf-d648-4143-8824-265bdd1b2fe9
+            example:
+              url: >-
+                https://herbalife-lifestyle-program-user-dev.thewitslab.com/participant/24ecd8cf-d648-4143-8824-265bdd1b2fe9
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: magicLink
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 8b7ab820-b898-4a7d-80ab-f125c28d97a3
+  /participants/reminder:
+    post:
+      tags:
+        - user-apis
+        - participants
+      summary: SendReminder
+      description: SendReminder
+      operationId: sendreminder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: 66d1a7f702d6bf5b9b8fcf11
+            example:
+              id: 66d1a7f702d6bf5b9b8fcf11
+      responses:
+        "200":
+          description: ""
+  /{cohortId}/participants:
+    put:
+      tags:
+        - admin-apis
+        - cohorts1
+      summary: add-participants
+      description: add-participants
+      operationId: addParticipants1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                participantIds:
+                  type: array
+                  items:
+                    type: string
+                    example: 668b30e4007f3157f6ac44e3
+                  example:
+                    - 668b30e4007f3157f6ac44e3
+                    - 668b36c5007f3157f6ac44e9
+            example:
+              participantIds:
+                - 668b30e4007f3157f6ac44e3
+                - 668b36c5007f3157f6ac44e9
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: cohortId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 669610af66817b1064daa5d2
+  /{cohortId}/remove-participants:
+    put:
+      tags:
+        - admin-apis
+        - cohorts1
+      summary: remove-participants
+      description: remove-participants
+      operationId: removeParticipants1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                participantIds:
+                  type: array
+                  items:
+                    type: string
+                    example: 668b30e4007f3157f6ac44e3
+                  example:
+                    - 668b30e4007f3157f6ac44e3
+            example:
+              participantIds:
+                - 668b30e4007f3157f6ac44e3
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: cohortId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 668b338b007f3157f6ac44e7
+  /active:
+    get:
+      tags:
+        - admin-apis
+        - cohorts1
+      summary: get-active
+      description: get-active
+      operationId: getActive1
+      responses:
+        "200":
+          description: ""
+  /past:
+    get:
+      tags:
+        - admin-apis
+        - cohorts1
+      summary: get-past
+      description: get-past
+      operationId: getPast1
+      responses:
+        "200":
+          description: ""
+  /pending:
+    get:
+      tags:
+        - admin-apis
+        - cohorts1
+      summary: get-pending
+      description: get-pending
+      operationId: getPending1
+      responses:
+        "200":
+          description: ""
+  /{cohortId}/participants/excluded:
+    get:
+      tags:
+        - admin-apis
+        - cohorts1
+      summary: get-excluded-participants
+      description: get-excluded-participants
+      operationId: getExcludedParticipants1
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: cohortId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66dee76c1092301a9d96fa27
+  /sendActivityMail/{participantId}:
+    post:
+      tags:
+        - user-apis
+        - cohorts
+      summary: send-activity-cohort
+      description: send-activity-cohort
+      operationId: sendActivityCohort
+      parameters:
+        - name: url
+          in: query
+          schema:
+            type: string
+            example: ""
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: participantId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: ""
+  /cohorts/{id}:
+    delete:
+      tags:
+        - user-apis
+        - cohorts
+      summary: Delete Cohort
+      description: Delete Cohort
+      operationId: deleteCohort
+      parameters:
+        - name: X-CSRF-Token
+          in: header
+          schema:
+            type: string
+            example: eZcA-coE5eKxRooKYwzv8YY2epBT0M2EXBaSN0CW64U
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66ed5d30a8a18d7d306f56e3
+  /participant/{magicLink}:
+    get:
+      tags:
+        - user-apis
+        - records
+      summary: get-a-record
+      description: get-a-record
+      operationId: getARecord
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: magicLink
+        in: path
+        required: true
+        schema:
+          type: string
+          example: c66b8cb3-e6e1-41cb-9d80-f49e5fe623d0
+  /save-draft/{magicLink}:
+    post:
+      tags:
+        - user-apis
+        - records
+      summary: save-draft
+      description: save-draft
+      operationId: saveDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                participantId:
+                  type: string
+                  example: 6696418142a5e718372eaca1
+                responses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      questionId:
+                        type: string
+                        example: 668b3a72b2238b57e477e6dd
+                      response:
+                        type: string
+                        example: "25"
+                  example:
+                    - questionId: 668b3a72b2238b57e477e6dd
+                      response: "25"
+            example:
+              participantId: 6696418142a5e718372eaca1
+              responses:
+                - questionId: 668b3a72b2238b57e477e6dd
+                  response: "25"
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: magicLink
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 98fa77f7-ead8-4545-8db7-e015292015b4
+  /submit/{magicLink}:
+    post:
+      tags:
+        - user-apis
+        - records
+      summary: submit-record
+      description: submit-record
+      operationId: submitRecord
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                participantId:
+                  type: string
+                  example: 66d1a7f702d6bf5b9b8fcf10
+                responses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      questionId:
+                        type: string
+                        example: 60c72b2f5f1b2c3d4e6f6a5b
+                      response:
+                        type: string
+                        example: "true"
+                  example:
+                    - questionId: 60c72b2f5f1b2c3d4e6f6a5b
+                      response: "true"
+            example:
+              participantId: 66d1a7f702d6bf5b9b8fcf10
+              responses:
+                - questionId: 60c72b2f5f1b2c3d4e6f6a5b
+                  response: "true"
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: magicLink
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 8b7ab820-b898-4a7d-80ab-f125c28d97a5
+  /{sessionId}:
+    put:
+      tags:
+        - user-apis
+        - session
+      summary: update
+      description: update
+      operationId: update2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attendedParticipantIds:
+                  type: array
+                  items:
+                    type: string
+                    example: ""
+                  example:
+                    - ""
+                    - ""
+                date:
+                  type: string
+                  example: ""
+                note:
+                  type: string
+                  example: ""
+            example:
+              attendedParticipantIds:
+                - ""
+                - ""
+              date: ""
+              note: ""
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66b249755e20394d11065dbc
+  /cohort/{cohortId}:
+    get:
+      tags:
+        - user-apis
+        - session
+      summary: get-by-cohort
+      description: get-by-cohort
+      operationId: getByCohort
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: cohortId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66b246f15e20394d11065dbb
+  /participant/{participantId}:
+    get:
+      tags:
+        - user-apis
+        - session
+      summary: get-sessions-by-participant-id
+      description: get-sessions-by-participant-id
+      operationId: getSessionsByParticipantId
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: participantId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66bcd1b38d815159146f6fbf
+  /fileFolder:
+    get:
+      tags:
+        - user-apis
+        - Resource
+      summary: listOfFolders
+      description: listOfFolders
+      operationId: listoffolders
+      responses:
+        "200":
+          description: ""
+    post:
+      tags:
+        - admin-apis
+        - Resources
+      summary: createfolderapi
+      description: createfolderapi
+      operationId: createfolderapi
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: aa
+                type:
+                  type: string
+                  example: pdf
+            example:
+              name: aa
+              type: pdf
+      responses:
+        "200":
+          description: ""
+  /fileFolder/list/{parentId}:
+    get:
+      tags:
+        - user-apis
+        - Resource
+      summary: getFilesByParentId
+      description: getFilesByParentId
+      operationId: getfilesbyparentid
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: parentId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: root
+  /user/distributor/summary:
+    get:
+      tags:
+        - user-apis
+        - DashBoard
+      summary: Dashboard
+      description: Dashboard
+      operationId: dashboard
+      responses:
+        "200":
+          description: ""
+  /:
+    get:
+      tags:
+        - user-apis
+      summary: index
+      description: index
+      operationId: index
+      responses:
+        "200":
+          description: ""
+  /upload/url/66dab1c6eb31c522bf00a4be:
+    get:
+      tags:
+        - user-apis
+      summary: GetFileUrlById
+      description: GetFileUrlById
+      operationId: getfileurlbyid
+      responses:
+        "200":
+          description: ""
+  /publish/{id}:
+    put:
+      tags:
+        - admin-apis
+        - questions
+      summary: publish
+      description: publish
+      operationId: publish
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66cf1cf5d2520144b1705c51
+  /unpublish/{id}:
+    put:
+      tags:
+        - admin-apis
+        - questions
+      summary: unpublish
+      description: unpublish
+      operationId: unpublish
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66798115e229604d196a9038
+  /search:
+    get:
+      tags:
+        - admin-apis
+        - questions
+      summary: search
+      description: search
+      operationId: search
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: size
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: search
+          in: query
+          schema:
+            type: string
+            example: Are
+      responses:
+        "200":
+          description: ""
+  /admin/distributors/sendInvite:
+    post:
+      tags:
+        - admin-apis
+        - distributors1
+      summary: send-invite
+      description: send-invite
+      operationId: sendInvite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: v11990@yopmail.com
+                name:
+                  type: string
+                  example: amit
+            example:
+              email: v11990@yopmail.com
+              name: amit
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+  /distributors/{id}:
+    delete:
+      tags:
+        - admin-apis
+        - distributors1
+      summary: delete
+      description: delete
+      operationId: delete3
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: ""
+  /participants:
+    get:
+      tags:
+        - admin-apis
+        - participants1
+      summary: get
+      description: get
+      operationId: get1
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: size
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: search
+          in: query
+          schema:
+            type: string
+            example: 66d1a7f702d6bf5b9b8fcf17
+      responses:
+        "200":
+          description: ""
+  /participants/{id}:
+    delete:
+      tags:
+        - admin-apis
+        - participants1
+      summary: delete
+      description: delete
+      operationId: delete4
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66d1a7f702d6bf5b9b8fcf10
+  /participantsByDistributor/{id}:
+    get:
+      tags:
+        - admin-apis
+        - participants1
+      summary: participantsByDistributor_Id
+      description: participantsByDistributor_Id
+      operationId: participantsbydistributorId
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66d1a4fc02d6bf5b9b8fcf0f
+  /distributors/{distributorId}:
+    get:
+      tags:
+        - admin-apis
+        - cohorts1
+      summary: getCohortByDistributorId
+      description: getCohortByDistributorId
+      operationId: getcohortbydistributorid
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: distributorId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66d811a70ee3e215e4f07780
+  /fileFolder/listFolders:
+    get:
+      tags:
+        - admin-apis
+        - Resources
+      summary: listOfFolders
+      description: listOfFolders
+      operationId: listoffolders1
+      responses:
+        "200":
+          description: ""
+  /fileFolder/rename/{id}:
+    put:
+      tags:
+        - admin-apis
+        - Resources
+      summary: rename folder
+      description: rename folder
+      operationId: renameFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: sss
+            example:
+              name: sss
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66f10ca209c4e90124c08ca8
+  /data/name/activities_1726146263854.csv:
+    get:
+      tags:
+        - admin-apis
+        - Resources
+      summary: GetFileFromGCSWithName
+      description: GetFileFromGCSWithName
+      operationId: getfilefromgcswithname
+      responses:
+        "200":
+          description: ""
+  /api/upload/updateFileName/{id}:
+    put:
+      tags:
+        - admin-apis
+        - Resources
+      summary: updateFileName
+      description: updateFileName
+      operationId: updatefilename
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                "":
+                  type: string
+                  example: ""
+                fileName:
+                  type: string
+                  example: djkfhdk
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66f1250f8d36f846d252593d
+  /upload/delete/{id}:
+    delete:
+      tags:
+        - admin-apis
+        - Resources
+      summary: DeleteFile
+      description: DeleteFile
+      operationId: deletefile
+      responses:
+        "200":
+          description: ""
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 66ec060cf8149b20914c8207
+  /upload/list/root:
+    get:
+      tags:
+        - admin-apis
+        - Resources
+      summary: getFilesByParentId
+      description: getFilesByParentId
+      operationId: getfilesbyparentid1
+      responses:
+        "200":
+          description: ""
+  /upload:
+    post:
+      tags:
+        - admin-apis
+        - Resources
+      summary: uploadFile
+      description: uploadFile
+      operationId: uploadfile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                fileName:
+                  type: string
+                  example: newFileCheck
+                folderId:
+                  type: string
+                  example: "1244"
+                type:
+                  type: string
+                  example: txt
+                url:
+                  type: string
+                  example: www.google.com
+      responses:
+        "200":
+          description: ""
+  /data/export-to-csv:
+    get:
+      tags:
+        - admin-apis
+        - CDC
+      summary: CDC-Report
+      description: CDC-Report
+      operationId: cdcReport
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            example: "2024-08-30T00:00:00Z"
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            example: "2024-08-30T23:59:59Z"
+      responses:
+        "200":
+          description: ""
+  /sessions:
+    get:
+      tags:
+        - admin-apis
+      summary: index
+      description: index
+      operationId: index1
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: MAKEUP
+      responses:
+        "200":
+          description: ""
+# tags:
+#   - name: user-apis
+#   - name: distributors
+#   - name: participants
+#   - name: activity
+#   - name: cohorts
+#   - name: records
+#   - name: session
+#   - name: Resource
+#   - name: DashBoard
+#   - name: admin-apis
+#   - name: questions
+#   - name: catalogs
+#   - name: distributors1
+#   - name: participants1
+#   - name: cohorts1
+#   - name: Resources
+#   - name: CDC

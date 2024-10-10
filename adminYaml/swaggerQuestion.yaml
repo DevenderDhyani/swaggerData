@@ -1,0 +1,2068 @@
+openapi: 3.0.0
+info:
+  title: Lifestyle Coach
+  description: "This API provides information about the Admin and their workflows."
+  version: 1.0.0
+  contact:
+    name: Lifestyle
+    email: "gtsdmanotifications@herbalife.com"
+servers:
+  - url: https://{environment}/api/v1/lifestyle/coach
+    variables:
+      environment:
+        default: dev01-herbalife.com
+        enum:
+          - dev01-herbalife.com
+tags:
+  - name: Admin
+    description: API for HN-Lifestyle-Coach
+security:
+  # - apiKeyAuth: []
+  - bearerAuth: []
+paths:
+  /login:
+    post:
+      tags:
+        - Admin Access
+      summary: Add Question
+      description: Add Question
+      operationId: AddQuestion
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      requestBody:
+        $ref: "#/components/requestBodies/AdminLoginPayload"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/LoginResponse/properties/data"
+                  message:
+                    $ref: "#/components/schemas/LoginResponse/properties/message"
+  /session:
+    get:
+      tags:
+        - Admin Access
+      summary: Get Index
+      description: Get Index.
+      operationId: GetIndex
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: type
+          in: query
+          required: true
+          description: Enter Query Param {type}
+          schema:
+            type: string
+            description: Enter Value for type variable
+            example: MAKEUP
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data:
+                      $ref: "#/components/schemas/MakeupSessionResponse/properties/data"
+                    message:
+                      $ref: "#/components/schemas/MakeupSessionResponse/properties/message"
+        "400":
+          description: Bad Request
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/BadRequestError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/BadRequestErrorBackend"
+  /question:
+    get:
+      tags:
+        - Question
+      summary: Get Index
+      description: Get Index.
+      operationId: GetIndex
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: true
+          description: Enter Query Param {type}
+          schema:
+            type: integer
+            description: Enter Value for Page
+            example: 2
+        - name: size
+          in: query
+          required: true
+          description: Enter Query Param {type}
+          schema:
+            type: integer
+            description: The ID of the Participant to retrieve.
+            example: 5
+        - name: search
+          in: query
+          required: true
+          description: Enter Query Param {type}
+          schema:
+            type: boolean
+            description: search {true/false}
+            example: true
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data:
+                      $ref: "#/components/schemas/AdminQuestion"
+                    message:
+                      $ref: "#/components/schemas/Message"
+        "400":
+          description: Bad Request
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/BadRequestError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/BadRequestErrorBackend"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ApiKeyErrorBackend"
+
+        "403":
+          description: Forbidden
+          headers:
+            x-global-transaction-id:
+              $ref: "#components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_Forbidden:
+                  $ref: "#/components/examples/Forbidden"
+                Backend_Forbidden:
+                  $ref: "#/components/examples/ForbiddenBackend"
+        "404":
+          description: Resource Not Found
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotFound"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotFoundBackend"
+        "405":
+          description: Method Not Allowed
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/MethodNotAllowed"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/MethodNotAllowedBackend"
+        "406":
+          description: Not Acceptable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotAcceptable"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotAcceptableBackend"
+        "408":
+          description: Request Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/RequestTimeout"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/RequestTimeoutBackend"
+        "409":
+          description: Conflict
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/Conflict"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ConflictBackend"
+        "415":
+          description: Unsupported Media Type
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnsupportedMediaType"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnsupportedMediaTypeBackend"
+        "422":
+          description: Unprocessable Entity
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnprocessableEntity"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnprocessableEntityBackend"
+        "429":
+          description: Too Many Requests
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/TooManyRequests"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/TooManyRequestsBackend"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/InternalServerErrorBackend"
+        "501":
+          description: Not Implemented
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/NotImplemented"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/NotImplementedBackend"
+        "502":
+          description: Bad Gateway
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/BadGateway"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/BadGatewayBackend"
+        "503":
+          description: Service Unavailable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/ServiceUnavailable"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/ServiceUnavailableBackend"
+        "504":
+          description: Gateway Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/GatewayTimeout"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/GatewayTimeoutBackend"
+    post:
+      tags:
+        - Question
+      summary: Add Question
+      description: Add Question
+      operationId: AddQuestion
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      requestBody:
+        $ref: "#/components/requestBodies/QuestionData"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data:
+                      $ref: "#/components/schemas/AdminQuestionPost"
+                    message:
+                      $ref: "#/components/schemas/Message"
+        "400":
+          description: Bad Request
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/BadRequestError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/BadRequestErrorBackend"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ApiKeyErrorBackend"
+
+        "403":
+          description: Forbidden
+          headers:
+            x-global-transaction-id:
+              $ref: "#components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_Forbidden:
+                  $ref: "#/components/examples/Forbidden"
+                Backend_Forbidden:
+                  $ref: "#/components/examples/ForbiddenBackend"
+        "404":
+          description: Resource Not Found
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotFound"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotFoundBackend"
+        "405":
+          description: Method Not Allowed
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/MethodNotAllowed"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/MethodNotAllowedBackend"
+        "406":
+          description: Not Acceptable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotAcceptable"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotAcceptableBackend"
+        "408":
+          description: Request Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/RequestTimeout"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/RequestTimeoutBackend"
+        "409":
+          description: Conflict
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/Conflict"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ConflictBackend"
+        "415":
+          description: Unsupported Media Type
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnsupportedMediaType"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnsupportedMediaTypeBackend"
+        "422":
+          description: Unprocessable Entity
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnprocessableEntity"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnprocessableEntityBackend"
+        "429":
+          description: Too Many Requests
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/TooManyRequests"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/TooManyRequestsBackend"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/InternalServerErrorBackend"
+        "501":
+          description: Not Implemented
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/NotImplemented"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/NotImplementedBackend"
+        "502":
+          description: Bad Gateway
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/BadGateway"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/BadGatewayBackend"
+        "503":
+          description: Service Unavailable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/ServiceUnavailable"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/ServiceUnavailableBackend"
+        "504":
+          description: Gateway Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/GatewayTimeout"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/GatewayTimeoutBackend"
+  /question/{id}:
+    delete:
+      tags:
+        - Question
+      summary: Delete Question
+      description: Delete Question.
+      operationId: DeleteQuestion
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Enter Query Param {type}
+          schema:
+            type: string
+            description: Enter Question/Participant Id
+            example: 66798115e229604d196a9038
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/DeleteQuestionResponse/properties/data"
+                  message:
+                    $ref: "#/components/schemas/DeleteQuestionResponse/properties/message"
+        "400":
+          description: Bad Request
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/BadRequestError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/BadRequestErrorBackend"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ApiKeyErrorBackend"
+        "403":
+          description: Forbidden
+          headers:
+            x-global-transaction-id:
+              $ref: "#components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_Forbidden:
+                  $ref: "#/components/examples/Forbidden"
+                Backend_Forbidden:
+                  $ref: "#/components/examples/ForbiddenBackend"
+        "404":
+          description: Resource Not Found
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotFound"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotFoundBackend"
+        "405":
+          description: Method Not Allowed
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/MethodNotAllowed"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/MethodNotAllowedBackend"
+        "406":
+          description: Not Acceptable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotAcceptable"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotAcceptableBackend"
+        "408":
+          description: Request Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/RequestTimeout"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/RequestTimeoutBackend"
+        "409":
+          description: Conflict
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/Conflict"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ConflictBackend"
+        "415":
+          description: Unsupported Media Type
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnsupportedMediaType"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnsupportedMediaTypeBackend"
+        "422":
+          description: Unprocessable Entity
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnprocessableEntity"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnprocessableEntityBackend"
+        "429":
+          description: Too Many Requests
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/TooManyRequests"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/TooManyRequestsBackend"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/InternalServerErrorBackend"
+        "501":
+          description: Not Implemented
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/NotImplemented"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/NotImplementedBackend"
+        "502":
+          description: Bad Gateway
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/BadGateway"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/BadGatewayBackend"
+        "503":
+          description: Service Unavailable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/ServiceUnavailable"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/ServiceUnavailableBackend"
+        "504":
+          description: Gateway Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/GatewayTimeout"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/GatewayTimeoutBackend"
+    put:
+      tags:
+        - Question
+      summary: "Update Activity by Id"
+      description: Updating Acitivity Details
+      operationId: UpdateActivityDetails1
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the distributor to retrieve.
+          schema:
+            type: string
+            description: The ID of the distributor to retrieve.
+            example: 507f191e810c19729de860ea
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      requestBody:
+        $ref: "#/components/requestBodies/AdminQuestionData"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/QuestionUpdateResponse/properties/data"
+                  Message:
+                    $ref: "#/components/schemas/QuestionUpdateResponse/properties/message"
+  /question/publish/{id}:
+    put:
+      tags:
+        - Question
+      summary: "Update "
+      description: Publishing Acitivity Details
+      operationId: UpdateActivityDetails2
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Question id / Participant Id.
+          schema:
+            type: string
+            description: The ID of the distributor to retrieve.
+            example: 507f191e810c19729de860ea
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/QuestionPublishResponse/properties/data"
+                  Message:
+                    $ref: "#/components/schemas/QuestionPublishResponse/properties/message"
+  /question/unpublish/{id}:
+    put:
+      tags:
+        - Question
+      summary: "Update "
+      description: Updating Acitivity Details
+      operationId: UpdateActivityDetails3
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the distributor to retrieve.
+          schema:
+            type: string
+            description: The ID of the distributor to retrieve.
+            example: 507f191e810c19729de860ea
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/QuestionUnpublishResponse/properties/data"
+                  Message:
+                    $ref: "#/components/schemas/QuestionUnpublishResponse/properties/message"
+  /api/search:
+    get:
+      tags:
+        - Question
+      summary: "Search Question"
+      description: Updating Acitivity Details
+      operationId: Search
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the distributor to retrieve.
+          schema:
+            type: string
+            description: The ID of the distributor to retrieve.
+            example: 507f191e810c19729de860ea
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/QuestionUnpublishResponse/properties/data"
+                  Message:
+                    $ref: "#/components/schemas/QuestionUnpublishResponse/properties/message"
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-apikey
+      description: x-apikey is used for authentication of each request.
+  parameters:
+    X-Global-TransactionId:
+      name: x-global-transaction-id
+      in: header
+      required: false
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+  headers:
+    X-Global-TransactionId:
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+      example: 850f36eb-f9f1-4510-acec-871b06c1da56
+      required: true
+  schemas:
+    CSRFData:
+      type: object
+      properties:
+        csrfToken:
+          type: string
+          format: uuid
+          example: 018b2f19-e79e-7d6a-a56d-29feb6211b04
+    AdminQuestion:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the question
+          example: "66f5b13c10eb8246188e96c7"
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the question was created
+          example: "2024-09-26T19:08:44.311Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the question was last updated
+          example: "2024-09-26T19:08:44.311Z"
+        question:
+          type: string
+          description: The text of the question
+          example: "test"
+        type:
+          type: string
+          enum:
+            - BOOLEAN
+            - NUMBER
+            - DESCRIPTIVE
+            - CATALOG
+            - RANGE
+            - LENGTH
+            - DATE
+          description: The type of the question
+          example: "CATALOG"
+        status:
+          type: boolean
+          description: The status of the question
+          example: false
+        addedToCDC:
+          type: boolean
+          description: Indicates if the question is added to CDC
+          example: false
+        cdcId:
+          type: string
+          nullable: true
+          description: The CDC identifier, if applicable
+          example: null
+        disclaimer:
+          type: string
+          nullable: true
+          description: Disclaimer for the question
+          example: null
+        category:
+          type: string
+          enum:
+            - GENERAL
+            - HEALTH
+          description: The category of the question
+          example: "GENERAL"
+        catalog:
+          type: object
+          nullable: true
+          description: Catalog details for CATALOG type questions
+          properties:
+            id:
+              type: string
+              description: The unique identifier for the catalog
+              example: "66d703a51ce01d259669b145"
+            createdAt:
+              type: string
+              format: date-time
+              description: The date and time when the catalog was created
+              example: "2024-09-03T12:40:05.193Z"
+            updatedAt:
+              type: string
+              format: date-time
+              description: The date and time when the catalog was last updated
+              example: "2024-09-03T12:40:05.193Z"
+            title:
+              type: string
+              description: The title of the catalog
+              example: "How confident are you that you can commit to a 12-month lifestyle change program?"
+            values:
+              type: array
+              description: The values for the catalog options
+              items:
+                type: object
+                additionalProperties:
+                  type: string
+              example:
+                - Not Very Confident: "1"
+                - Moderately Confident: "5"
+                - Super Confident: "10"
+            active:
+              type: boolean
+              description: The active status of the catalog
+              example: true
+      required:
+        - question
+        - type
+        - status
+        - category
+    AdminQuestionPost:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message indicating the success of the operation
+          example: "Question Added Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The unique identifier for the question
+              example: "6707bf009b582367193382ca"
+            createdAt:
+              type: string
+              format: date-time
+              description: The date and time when the question was created
+              example: "2024-10-10T11:48:16.199074265Z"
+            updatedAt:
+              type: string
+              format: date-time
+              description: The date and time when the question was last updated
+              example: "2024-10-10T11:48:16.199075090Z"
+            question:
+              type: string
+              description: The text of the question
+              example: "What is your Name?"
+            type:
+              type: string
+              enum:
+                - BOOLEAN
+                - NUMBER
+                - DESCRIPTIVE
+                - CATALOG
+                - RANGE
+                - LENGTH
+                - DATE
+              description: The type of the question
+              example: "DATE"
+            status:
+              type: boolean
+              description: The status of the question
+              example: false
+            addedToCDC:
+              type: boolean
+              description: Indicates if the question is added to CDC
+              example: false
+            cdcId:
+              type: string
+              nullable: true
+              description: The CDC identifier, if applicable
+              example: null
+            disclaimer:
+              type: string
+              nullable: true
+              description: Disclaimer for the question
+              example: "Disclaimer about the Question"
+            category:
+              type: string
+              enum:
+                - GENERAL
+                - HEALTH
+              description: The category of the question
+              example: "GENERAL"
+            catalog:
+              type: object
+              nullable: true
+              description: Catalog details for CATALOG type questions, if applicable
+              example: null
+      required:
+        - message
+        - data
+    DeleteQuestionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: true
+        status:
+          type: integer
+          description: HTTP status code for the response
+          example: 200
+        message:
+          type: string
+          description: Response message indicating the result of the operation
+          example: "Question Deleted Successfully"
+        data:
+          type: object
+          nullable: true
+          description: Data related to the response, null when there's no additional data
+          example: null
+      required:
+        - success
+        - status
+        - message
+        - data
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message indicating the result of the login operation
+          example: "Login successfully"
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              description: JWT token received after successful login
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLm15aGVyYmFsaWZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vaGVyYmFsaWZlbGlmZXN0eWxlLmNvbSIsInN1YiI6ImdhamVuZHJhLm1laHJhQHRoZXdpdHNsYWIuY29tIiwiaWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMWI2NS1mYjI2OGZhMjg5N2QiLCJmdWxsTmFtZSI6Ii0iLCJlbWFpbCI6ImdhamVuZHJhLm1laHJhQHRoZXdpdHNsYWIuY29tIiwiZXhwIjoxNzI4NjQ2NDg0LCJpYXQiOjE3Mjg1NjAwODQsIm5iZiI6MTcyODU2MDA4NCwianRpIjoiMTIzNDUifQ.4j9QH31lUzSNt8nTIgYY0WuuDF3B19rYta5QO3PsOVM"
+      required:
+        - message
+        - data
+    QuestionUpdateResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message indicating the result of the question update
+          example: "Question Updated Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the question
+              example: "66a36b459687a9361b2e644f"
+            createdAt:
+              type: string
+              format: date-time
+              description: Creation timestamp of the question
+              example: "2024-07-26T09:24:21.331Z"
+            updatedAt:
+              type: string
+              format: date-time
+              description: Last updated timestamp of the question
+              example: "2024-07-26T09:24:21.331Z"
+            question:
+              type: string
+              description: The question text
+              example: "Are you currently or previously diagnosed with type 1 or type 2 diabetes?"
+            type:
+              type: string
+              enum:
+                - BOOLEAN
+                - DATE
+                - CATALOG
+              description: The type of the question
+              example: "BOOLEAN"
+            status:
+              type: boolean
+              description: The status of the question
+              example: true
+            addedToCDC:
+              type: boolean
+              description: Whether the question has been added to the CDC
+              example: true
+            cdcId:
+              type: string
+              nullable: true
+              description: CDC ID associated with the question
+              example: "NAME"
+            disclaimer:
+              type: string
+              description: Disclaimer information related to the question
+              example: "I appreciate your interest in the Herbalife Lifestyle Program. While this program is intended for individuals not yet diagnosed with diabetes, you are still welcome to join..."
+            category:
+              type: string
+              enum:
+                - GENERAL
+                - HEALTH
+              description: Category of the question
+              example: "GENERAL"
+            catalog:
+              type: string
+              nullable: true
+              description: Catalog information, if applicable
+              example: null
+      required:
+        - message
+        - data
+    MakeupSessionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message indicating the result of the session addition
+          example: "MAKEUP session added successfully"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the session
+                example: "67038d3440325b6ec108d032"
+              createdAt:
+                type: string
+                format: date-time
+                description: Creation timestamp of the session
+                example: "2024-10-07T07:26:44.996Z"
+              updatedAt:
+                type: string
+                format: date-time
+                description: Last updated timestamp of the session
+                example: "2024-10-07T07:26:44.996Z"
+              cohort:
+                type: string
+                nullable: true
+                description: The cohort the session belongs to
+                example: null
+              date:
+                type: string
+                format: date-time
+                description: Scheduled date of the session
+                example: "2024-11-05T18:30:00Z"
+              sessionType:
+                type: string
+                enum:
+                  - GENERAL
+                  - MAKEUP
+                description: The type of the session
+                example: "MAKEUP"
+              note:
+                type: string
+                description: Additional notes about the session
+                example: "dsdxs"
+              attendedParticipants:
+                type: array
+                description: List of participants who attended the session
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Unique identifier for the participant
+                      example: "6703863140325b6ec108d02e"
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Creation timestamp of the participant
+                      example: "2024-10-07T06:56:49.036Z"
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: Last updated timestamp of the participant
+                      example: "2024-10-07T06:56:49.036Z"
+                    firstName:
+                      type: string
+                      description: First name of the participant
+                      example: "Parul"
+                    lastName:
+                      type: string
+                      description: Last name of the participant
+                      example: "Joshi"
+                    email:
+                      type: string
+                      format: email
+                      description: Email of the participant
+                      example: "parul@yopmail.com"
+                    phone:
+                      type: string
+                      description: Phone number of the participant
+                      example: "+1 987 456 3214"
+                    participantID:
+                      type: integer
+                      description: Participant ID
+                      example: 68
+                    distributor:
+                      type: object
+                      description: Distributor information
+                      properties:
+                        id:
+                          type: string
+                          description: Unique identifier for the distributor
+                          example: "66f57fb92846cb59882e42bb"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Creation timestamp of the distributor
+                          example: "2024-09-26T15:37:29.629Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Last updated timestamp of the distributor
+                          example: "2024-09-26T15:37:29.629Z"
+                        firstName:
+                          type: string
+                          description: First name of the distributor
+                          example: "Gajendra"
+                        lastName:
+                          type: string
+                          description: Last name of the distributor
+                          example: "Mehra"
+                        email:
+                          type: string
+                          format: email
+                          description: Email of the distributor
+                          example: "null@herbalife.com"
+                        phone:
+                          type: string
+                          description: Phone number of the distributor
+                          example: "+1 987 456 3225"
+                        coachID:
+                          type: integer
+                          description: ID of the coach associated with the distributor
+                          example: 24
+                        cdcCompletionDate:
+                          type: string
+                          format: date-time
+                          description: CDC completion date
+                          example: "2024-10-01T18:30:00Z"
+                        hngTrainingCompletionDate:
+                          type: string
+                          format: date-time
+                          description: HNG training completion date
+                          example: "2024-10-03T18:30:00Z"
+                        lastDateAttendedAdvancedTraining:
+                          type: string
+                          format: date-time
+                          description: Date of the last attended advanced training
+                          example: "2024-10-23T18:30:00Z"
+                        deliveryMode:
+                          type: string
+                          enum:
+                            - ONLINE
+                            - OFFLINE
+                            - BOTH
+                          description: Delivery mode of the training
+                          example: "BOTH"
+                        location:
+                          type: string
+                          description: Location of the distributor
+                          example: "USADD"
+                    magicLink:
+                      type: string
+                      format: uuid
+                      description: Magic link associated with the participant
+                      example: "a56b4298-783f-4f78-b64f-519b423c2351"
+                    enrolled:
+                      type: boolean
+                      description: Enrollment status of the participant
+                      example: false
+      required:
+        - message
+        - data
+    QuestionUnpublishResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message indicating the result of the question unpublish operation
+          example: "Question UnPublished Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the question
+              example: "66f5b13c10eb8246188e96c7"
+            createdAt:
+              type: string
+              format: date-time
+              description: Creation timestamp of the question
+              example: "2024-09-26T19:08:44.311Z"
+            updatedAt:
+              type: string
+              format: date-time
+              description: Last updated timestamp of the question
+              example: "2024-09-26T19:08:44.311Z"
+            question:
+              type: string
+              description: The question text
+              example: "test"
+            type:
+              type: string
+              enum:
+                - BOOLEAN
+                - DATE
+                - CATALOG
+              description: The type of the question
+              example: "CATALOG"
+            status:
+              type: boolean
+              description: The status of the question, indicating if it is published or unpublished
+              example: false
+            addedToCDC:
+              type: boolean
+              description: Whether the question has been added to the CDC
+              example: false
+            cdcId:
+              type: string
+              nullable: true
+              description: CDC ID associated with the question
+              example: null
+            disclaimer:
+              type: string
+              nullable: true
+              description: Disclaimer information related to the question
+              example: null
+            category:
+              type: string
+              enum:
+                - GENERAL
+                - HEALTH
+              description: Category of the question
+              example: "GENERAL"
+            catalog:
+              type: object
+              description: Catalog details related to the question
+              properties:
+                id:
+                  type: string
+                  description: Unique identifier for the catalog
+                  example: "66d703a51ce01d259669b145"
+                createdAt:
+                  type: string
+                  format: date-time
+                  description: Creation timestamp of the catalog
+                  example: "2024-09-03T12:40:05.193Z"
+                updatedAt:
+                  type: string
+                  format: date-time
+                  description: Last updated timestamp of the catalog
+                  example: "2024-09-03T12:40:05.193Z"
+                title:
+                  type: string
+                  description: The title of the catalog question
+                  example: "How confident are you that you can commit to a 12-month lifestyle change program?"
+                values:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    description: List of confidence values associated with the catalog question
+                  example:
+                    - Not Very confident: "1"
+                    - Moderately Confident: "5"
+                    - Super Confident: "10"
+                active:
+                  type: boolean
+                  description: Indicates if the catalog is currently active
+                  example: true
+      required:
+        - message
+        - data
+    QuestionPublishResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message indicating the result of the question publish operation
+          example: "Question Published Successfully"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the question
+              example: "66f5b13c10eb8246188e96c7"
+            createdAt:
+              type: string
+              format: date-time
+              description: Creation timestamp of the question
+              example: "2024-09-26T19:08:44.311Z"
+            updatedAt:
+              type: string
+              format: date-time
+              description: Last updated timestamp of the question
+              example: "2024-09-26T19:08:44.311Z"
+            question:
+              type: string
+              description: The question text
+              example: "test"
+            type:
+              type: string
+              enum:
+                - BOOLEAN
+                - DATE
+                - CATALOG
+              description: The type of the question
+              example: "CATALOG"
+            status:
+              type: boolean
+              description: The status of the question, indicating if it is published
+              example: true
+            addedToCDC:
+              type: boolean
+              description: Whether the question has been added to the CDC
+              example: false
+            cdcId:
+              type: string
+              nullable: true
+              description: CDC ID associated with the question
+              example: null
+            disclaimer:
+              type: string
+              nullable: true
+              description: Disclaimer information related to the question
+              example: null
+            category:
+              type: string
+              enum:
+                - GENERAL
+                - HEALTH
+              description: Category of the question
+              example: "GENERAL"
+            catalog:
+              type: object
+              description: Catalog details related to the question
+              properties:
+                id:
+                  type: string
+                  description: Unique identifier for the catalog
+                  example: "66d703a51ce01d259669b145"
+                createdAt:
+                  type: string
+                  format: date-time
+                  description: Creation timestamp of the catalog
+                  example: "2024-09-03T12:40:05.193Z"
+                updatedAt:
+                  type: string
+                  format: date-time
+                  description: Last updated timestamp of the catalog
+                  example: "2024-09-03T12:40:05.193Z"
+                title:
+                  type: string
+                  description: The title of the catalog question
+                  example: "How confident are you that you can commit to a 12-month lifestyle change program?"
+                values:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    description: List of confidence values associated with the catalog question
+                  example:
+                    - Not Very confident: "1"
+                    - Moderately Confident: "5"
+                    - Super Confident: "10"
+                active:
+                  type: boolean
+                  description: Indicates if the catalog is currently active
+                  example: true
+      required:
+        - message
+        - data
+    Message:
+      type: string
+      description: Message is the message returned from the API
+      nullable: true
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: Error code is the code returned from the API
+        errorMessage:
+          type: string
+          description: Error message is the message returned from the API
+        errorDescription:
+          type: string
+          description: Error description is the description of the error returned from the API
+  requestBodies:
+    QuestionData:
+      description: Data for creating a question
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              question:
+                type: string
+                description: The text of the question
+                example: "What is your Name?"
+              type:
+                type: string
+                description: The type of question
+                enum:
+                  - BOOLEAN
+                  - NUMBER
+                  - DESCRIPTIVE
+                  - CATALOG
+                  - RANGE
+                  - LENGTH
+                  - DATE
+                example: "DATE"
+              status:
+                type: boolean
+                description: The status of the question (active or not)
+                example: false
+              addedToCDC:
+                type: boolean
+                description: Indicates if the question is added to CDC
+                example: false
+              catalogId:
+                type: string
+                description: The ID of the catalog associated with the question
+                example: "66797d5b95741c4dbc178885"
+              category:
+                type: string
+                description: The category of the question
+                enum:
+                  - GENERAL
+                  - HEALTH
+                example: "GENERAL"
+              disclaimer:
+                type: string
+                description: Disclaimer related to the question
+                example: "Disclaimer about the Question"
+            required:
+              - question
+              - type
+              - status
+              - addedToCDC
+              - catalogId
+              - category
+    AdminQuestionData:
+      description: Schema for creating a question
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              question:
+                type: string
+                description: The text of the question
+                example: "Are you currently or previously\ndiagnosed with type 1 or type 2\ndiabetes?"
+              type:
+                type: string
+                description: The type of question
+                enum:
+                  - BOOLEAN
+                  - NUMBER
+                  - DESCRIPTIVE
+                  - CATALOG
+                  - RANGE
+                  - LENGTH
+                  - DATE
+                example: "BOOLEAN"
+              status:
+                type: boolean
+                description: The status of the question (active or not)
+                example: false
+              addedToCDC:
+                type: boolean
+                description: Indicates if the question is added to CDC
+                example: true
+              disclaimer:
+                type: string
+                description: Disclaimer related to the question
+                example: "I appreciate your interest in the Herbalife Lifestyle Program. While this program is intended for individuals not yet diagnosed with diabetes, you are still\nwelcome to join. Please understand this program is not designed to cure or reverse diabetes and should not replace professional medical advice or treatment..."
+              category:
+                type: string
+                description: The category of the question
+                enum:
+                  - GENERAL
+                  - HEALTH
+                example: "GENERAL"
+              catalog:
+                type: string
+                nullable: true
+                description: Reference to the associated catalog, can be null
+                example: null
+              cdcId:
+                type: string
+                nullable: true
+                description: Reference to the associated catalog, can be null
+                example: null
+            required:
+              - question
+              - type
+              - status
+              - addedToCDC
+              - category
+
+      required: true
+    CreateParticipant:
+      description: Create Participant
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: email of the Participant.
+                example: johndoe@herbalife.com
+              firstName:
+                type: string
+                description: first name of the participant.
+                example: John
+              lastName:
+                type: string
+                description: last name of the participant.
+                example: Doe
+              phone:
+                type: string
+                description: phone number of the participant.
+                example: "9310008439"
+            required:
+              - email
+              - firstName
+              - lastName
+
+      required: true
+    AdminLoginPayload:
+      description: Request body containing a JWT token for authentication.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: JWT token for authentication
+                example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlhXM3F6SWFjQjg5U2NLdmpkOGpva28ybUllWSJ9.eyJ2ZXIiOiIyLjAiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOTE4ODA0MGQtNmM2Ny00YzViLWIxMTItMzZhMzA0YjY2ZGFkL3YyLjAiLCJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFJeWdMZjhmYmxyc0ZTamdiaGlQUUNzIiwiYXVkIjoiYjM1ZTlkOTQtNjAzMC00YmVlLTk0ZWEtZGU5MTM3YmRmNzNiIiwiZXhwIjoxNzI2Njc0MzQwLCJpYXQiOjE3MjY1ODc2NDAsIm5iZiI6MTcyNjU4NzY0MCwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2FqZW5kcmEubWVocmFAdGhld2l0c2xhYi5jb20iLCJvaWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMWI2NS1mYjI2OGZhMjg5N2QiLCJ0aWQiOiI5MTg4MDQwZC02YzY3LTRjNWItYjExMi0zNmEzMDRiNjZkYWQiLCJub25jZSI6IjAx"
+            required:
+              - token
+  examples:
+    # 400
+    BadRequestError:
+      value:
+        errorCode: APG0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    BadRequestErrorBackend:
+      value:
+        errorCode: BCK0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    # 401
+    ApiKeyError:
+      value:
+        errorCode: APG0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    ApiKeyErrorBackend:
+      value:
+        errorCode: BCK0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    # 403
+    Forbidden:
+      value:
+        errorCode: APG0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    ForbiddenBackend:
+      value:
+        errorCode: BCK0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    # 404
+    NotFound:
+      value:
+        errorCode: APG0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    NotFoundBackend:
+      value:
+        errorCode: BCK0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    # 405
+    MethodNotAllowed:
+      value:
+        errorCode: APG0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    MethodNotAllowedBackend:
+      value:
+        errorCode: BCK0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    # 406
+    NotAcceptable:
+      value:
+        errorCode: APG0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    NotAcceptableBackend:
+      value:
+        errorCode: BCK0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    # 408
+    RequestTimeout:
+      value:
+        errorCode: APG0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    RequestTimeoutBackend:
+      value:
+        errorCode: BCK0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    # 409
+    Conflict:
+      value:
+        errorCode: APG0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    ConflictBackend:
+      value:
+        errorCode: BCK0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    # 415
+    UnsupportedMediaType:
+      value:
+        errorCode: APG0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    UnsupportedMediaTypeBackend:
+      value:
+        errorCode: BCK0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    # 422
+    UnprocessableEntity:
+      value:
+        errorCode: APG0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    UnprocessableEntityBackend:
+      value:
+        errorCode: BCK0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    # 429
+    TooManyRequests:
+      value:
+        errorCode: APG0012
+        errorMessage: Too Many Requests
+        errorDescription: Request rate limit exceeded
+    TooManyRequestsBackend:
+      value:
+        errorCode: BCK0012
+        errorMessage: Too Many Requests
+        errorDescription: Request rate limit exceeded
+    # 500
+    InternalServerError:
+      value:
+        errorCode: APG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    InternalServerErrorBackend:
+      value:
+        errorCode: BCG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    # 501
+    NotImplemented:
+      value:
+        errorCode: APG0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    NotImplementedBackend:
+      value:
+        errorCode: BCK0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    # 502
+    BadGateway:
+      value:
+        errorCode: APG0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    BadGatewayBackend:
+      value:
+        errorCode: BCK0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    # 503
+    ServiceUnavailable:
+      value:
+        errorCode: APG0016
+        errorMessage: Service Unavailable
+        errorDescription: Server is not ready to handle the request
+    ServiceUnavailableBackend:
+      value:
+        errorCode: BCK0016
+        errorMessage: ServiceUnavailable
+        errorDescription: Server is not ready to handle the request
+    # 504
+    GatewayTimeout:
+      value:
+        errorCode: APG0017
+        errorMessage: Gateway Timeout
+        errorDescription: Gateway Timeout
+    GatewayTimeoutBackend:
+      value:
+        errorCode: BCK0017
+        errorMessage: Gateway Timeout
+        errorDescription: Server is not ready to handle the request

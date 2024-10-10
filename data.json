@@ -1,0 +1,122 @@
+"message": "Cohorts Retrieved Successfully",
+"data": [
+    {
+        "id": "66f57fd52846cb59882e42bc",
+        "createdAt": "2024-09-26T15:37:57.175Z",
+        "updatedAt": "2024-09-26T15:37:57.175Z",
+        "name": "Team A",
+        "startDate": "2024-09-25T18:30:00Z",
+        "endDate": "2025-09-25T18:30:00Z",
+        "deliveryMode": "BOTH",
+        "cohortID": 15,
+        "participants": [
+            {
+                "id": "66f57ffb2846cb59882e42bd",
+                "createdAt": "2024-09-26T15:38:35.040Z",
+                "updatedAt": "2024-09-26T15:38:35.040Z",
+                "firstName": "Laura",
+                "lastName": "Sandoval",
+                "email": "laurasand+invite23@herbalife.com",
+                "phone": "+1 898 987 6789",
+                "participantID": 62,
+                "distributor": {
+                    "id": "66f57fb92846cb59882e42bb",
+                    "createdAt": "2024-09-26T15:37:29.629Z",
+                    "updatedAt": "2024-09-26T15:37:29.629Z",
+                    "firstName": "Gajendra",
+                    "lastName": "Mehra",
+                    "email": "null@herbalife.com",
+                    "phone": "+1 987 456 3225",
+                    "coachID": 24,
+                    "cdcCompletionDate": "2024-10-01T18:30:00Z",
+                    "hngTrainingCompletionDate": "2024-10-03T18:30:00Z",
+                    "lastDateAttendedAdvancedTraining": "2024-10-23T18:30:00Z",
+                    "deliveryMode": "BOTH",
+                    "location": "USADD"
+                },
+                "magicLink": "9b3e12c7-d345-4fc0-9fd9-9cb73d75307f",
+                "enrolled": false
+            }
+        ]
+            "distributor": {
+            "id": "66f57fb92846cb59882e42bb",
+            "createdAt": "2024-09-26T15:37:29.629Z",
+            "updatedAt": "2024-09-26T15:37:29.629Z",
+            "firstName": "Gajendra",
+            "lastName": "Mehra",
+            "email": "null@herbalife.com",
+            "phone": "+1 987 456 3225",
+            "coachID": 24,
+            "cdcCompletionDate": "2024-10-01T18:30:00Z",
+            "hngTrainingCompletionDate": "2024-10-03T18:30:00Z",
+            "lastDateAttendedAdvancedTraining": "2024-10-23T18:30:00Z",
+            "deliveryMode": "BOTH",
+            "location": "USADD"
+        }
+    }
+]
+}
+
+
+
+
+{
+"message": "Pending Cohorts Retrieved Successfully",
+"data": [
+    {
+        "id": "670396f240325b6ec108d03a",
+        "createdAt": "2024-10-07T08:08:18.677Z",
+        "updatedAt": "2024-10-07T08:08:18.677Z",
+        "name": "Team Bd",
+        "startDate": "2024-10-06T18:30:00Z",
+        "endDate": "2025-10-06T18:30:00Z",
+        "deliveryMode": "ONLINE",
+        "cohortID": 20,
+        "participants": [
+            {
+                "id": "6703863140325b6ec108d02e",
+                "createdAt": "2024-10-07T06:56:49.036Z",
+                "updatedAt": "2024-10-07T06:56:49.036Z",
+                "firstName": "Parul",
+                "lastName": "Joshi",
+                "email": "parul@yopmail.com",
+                "phone": "+1 987 456 3214",
+                "participantID": 68,
+                "distributor": {
+                    "id": "66f57fb92846cb59882e42bb",
+                    "createdAt": "2024-09-26T15:37:29.629Z",
+                    "updatedAt": "2024-09-26T15:37:29.629Z",
+                    "firstName": "Gajendra",
+                    "lastName": "Mehra",
+                    "email": "null@herbalife.com",
+                    "phone": "+1 987 456 3225",
+                    "coachID": 24,
+                    "cdcCompletionDate": "2024-10-01T18:30:00Z",
+                    "hngTrainingCompletionDate": "2024-10-03T18:30:00Z",
+                    "lastDateAttendedAdvancedTraining": "2024-10-23T18:30:00Z",
+                    "deliveryMode": "BOTH",
+                    "location": "USADD"
+                },
+                "magicLink": "a56b4298-783f-4f78-b64f-519b423c2351",
+                "enrolled": false
+            }
+        ],
+        "distributor": {
+            "id": "66ce3b4d8b130222373ac63b",
+            "createdAt": "2024-08-27T20:47:09.625Z",
+            "updatedAt": "2024-08-27T20:47:09.625Z",
+            "firstName": "Laura",
+            "lastName": "Sandoval",
+            "email": "laurasand@herbalife.com",
+            "phone": null,
+            "coachID": 3,
+            "cdcCompletionDate": null,
+            "hngTrainingCompletionDate": null,
+            "lastDateAttendedAdvancedTraining": null,
+            "deliveryMode": null,
+            "location": null
+        }
+    }
+]
+}
+}

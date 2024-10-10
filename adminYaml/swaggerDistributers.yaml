@@ -1,0 +1,1265 @@
+openapi: 3.0.0
+info:
+  title: Lifestyle Coach
+  description: "This API provides information about the Admin and their workflows."
+  version: 1.0.0
+  contact:
+    name: Lifestyle
+    email: "gtsdmanotifications@herbalife.com"
+servers:
+  - url: https://{environment}/api/v1/lifestyle/coach
+    variables:
+      environment:
+        default: dev01-herbalife.com
+        enum:
+          - dev01-herbalife.com
+tags:
+  - name: Admin
+    description: API for HN-Lifestyle-Coach
+security:
+  # - apiKeyAuth: []
+  - bearerAuth: []
+paths:
+  /admin/distributers:
+    get:
+      tags:
+        - Distributer
+      summary: Get Distributer
+      description: Get Distributer.
+      operationId: GetDistributer
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: true
+          description: Enter Query Param Page
+          schema:
+            type: integer
+            description: Enter Value for Page
+            example: 2
+        - name: size
+          in: query
+          required: true
+          description: Enter Query Param {size}
+          schema:
+            type: integer
+            description: The ID of the Participant to retrieve.
+            example: 5
+        - name: search
+          in: query
+          required: true
+          description: Enter Query Param {search}
+          schema:
+            type: boolean
+            description: search {true/false}
+            example: true
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data:
+                      $ref: "#/components/schemas/AdminQuestion"
+                    message:
+                      $ref: "#/components/schemas/Message"
+        "400":
+          description: Bad Request
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/BadRequestError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/BadRequestErrorBackend"
+        "401":
+          description: UNAUTHORIZED
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/ApiKeyError"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ApiKeyErrorBackend"
+
+        "403":
+          description: Forbidden
+          headers:
+            x-global-transaction-id:
+              $ref: "#components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_Forbidden:
+                  $ref: "#/components/examples/Forbidden"
+                Backend_Forbidden:
+                  $ref: "#/components/examples/ForbiddenBackend"
+        "404":
+          description: Resource Not Found
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotFound"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotFoundBackend"
+        "405":
+          description: Method Not Allowed
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/MethodNotAllowed"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/MethodNotAllowedBackend"
+        "406":
+          description: Not Acceptable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/NotAcceptable"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/NotAcceptableBackend"
+        "408":
+          description: Request Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/RequestTimeout"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/RequestTimeoutBackend"
+        "409":
+          description: Conflict
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/Conflict"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/ConflictBackend"
+        "415":
+          description: Unsupported Media Type
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnsupportedMediaType"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnsupportedMediaTypeBackend"
+        "422":
+          description: Unprocessable Entity
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/UnprocessableEntity"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/UnprocessableEntityBackend"
+        "429":
+          description: Too Many Requests
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_ApiKeyError:
+                  $ref: "#/components/examples/TooManyRequests"
+                ApiKeyErrorBackend:
+                  $ref: "#/components/examples/TooManyRequestsBackend"
+        "500":
+          description: INTERNAL SERVER ERROR
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/InternalServerError"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/InternalServerErrorBackend"
+        "501":
+          description: Not Implemented
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/NotImplemented"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/NotImplementedBackend"
+        "502":
+          description: Bad Gateway
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/BadGateway"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/BadGatewayBackend"
+        "503":
+          description: Service Unavailable
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/ServiceUnavailable"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/ServiceUnavailableBackend"
+        "504":
+          description: Gateway Timeout
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Proxy_InternalServerError:
+                  $ref: "#/components/examples/GatewayTimeout"
+                Backend_InternalServerError::
+                  $ref: "#/components/examples/GatewayTimeoutBackend"
+  /admin/distributers/sendInvite:
+    post:
+      tags:
+        - Distributer
+      summary: Send Invite
+      description: Add Question
+      operationId: AddQuestion
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+      requestBody:
+        $ref: "#/components/requestBodies/UserData"
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data:
+                      $ref: "#/components/schemas/Cohort"
+                    message:
+                      $ref: "#/components/schemas/Message"
+  /admin/distributors/{id}:
+    delete:
+      tags:
+        - Distributer
+      summary: "Delete activity by Participant || Activity Id"
+      description: Delete activity by Participant Id
+      operationId: DeleteActivityByParticipantId
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Participant to delete.
+          schema:
+            type: string
+            description: The ID of the distributor to retrieve.
+            example: 507f191e810c19729de860ea
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          description: X-CSRF-Token
+          schema:
+            type: string
+            description: The ID of the Participant to delete.
+            example: 507f191e810c19729de860ea
+        - $ref: "#/components/parameters/X-Global-TransactionId"
+
+      responses:
+        "200":
+          description: SUCCESS
+          headers:
+            x-global-transaction-id:
+              $ref: "#/components/headers/X-Global-TransactionId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Participant"
+                  Message:
+                    $ref: "#/components/schemas/Message"
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-apikey
+      description: x-apikey is used for authentication of each request.
+  parameters:
+    X-Global-TransactionId:
+      name: x-global-transaction-id
+      in: header
+      required: false
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+    DistributerId:
+      name: "distributorId"
+      in: query
+      required: true
+      description: Unique Distributer's id of type uuid v4/v5.
+      schema:
+        type: string
+      example: 123e4567-e89b-12d3-a456-426614174000
+    ParticipantId:
+      name: "ParticipantId"
+      in: path
+      required: true
+      description: Unique Participant id of type string
+      schema:
+        type: string
+      example: 66d1a4fc02d6bf5b9b8fcf0f
+    SessionId:
+      name: "SessionId"
+      in: path
+      required: true
+      description: Unique Session id
+      schema:
+        type: string
+      example: 66d1a4fc02d6bf5b9b8fcf0f
+    Page:
+      name: "Page"
+      in: header
+      required: true
+      description: Page
+      schema:
+        type: integer
+        format: number
+    Size:
+      name: "Size"
+      in: header
+      required: true
+      description: Size
+      schema:
+        type: integer
+        format: number
+    Search:
+      name: "Search"
+      in: query
+      required: true
+      description: Search
+      schema:
+        type: string
+    MagicLink:
+      name: magicLink
+      in: path
+      required: true
+      description: Enter magicLink id to get the participant
+      schema:
+        type: string
+        format: uuid
+  headers:
+    X-Global-TransactionId:
+      description: Unique GUID of type uuid v4/v5.
+      schema:
+        type: string
+        format: uuid
+      example: 850f36eb-f9f1-4510-acec-871b06c1da56
+      required: true
+  schemas:
+    CSRFData:
+      type: object
+      properties:
+        csrfToken:
+          type: string
+          format: uuid
+          example: 018b2f19-e79e-7d6a-a56d-29feb6211b04
+    Distributor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: uuid which is the id of the distributor.
+          example: 123e4567-e89b-12d3-a456-426614174000
+    ParticipantId:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Session id
+          example: 66d1bf1302d6bf5b9b8fcf16
+    SessionId:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: uuid which is the id of the distributor.
+          example: 66d1bf1302d6bf5b9b8fcf16
+
+    AdminQuestion:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the question
+          example: "66f5b13c10eb8246188e96c7"
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the question was created
+          example: "2024-09-26T19:08:44.311Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the question was last updated
+          example: "2024-09-26T19:08:44.311Z"
+        question:
+          type: string
+          description: The text of the question
+          example: "test"
+        type:
+          type: string
+          enum:
+            - BOOLEAN
+            - NUMBER
+            - DESCRIPTIVE
+            - CATALOG
+            - RANGE
+            - LENGTH
+            - DATE
+          description: The type of the question
+          example: "CATALOG"
+        status:
+          type: boolean
+          description: The status of the question
+          example: false
+        addedToCDC:
+          type: boolean
+          description: Indicates if the question is added to CDC
+          example: false
+        cdcId:
+          type: string
+          nullable: true
+          description: The CDC identifier, if applicable
+          example: null
+        disclaimer:
+          type: string
+          nullable: true
+          description: Disclaimer for the question
+          example: null
+        category:
+          type: string
+          enum:
+            - GENERAL
+            - HEALTH
+          description: The category of the question
+          example: "GENERAL"
+        catalog:
+          type: object
+          nullable: true
+          description: Catalog details for CATALOG type questions
+          properties:
+            id:
+              type: string
+              description: The unique identifier for the catalog
+              example: "66d703a51ce01d259669b145"
+            createdAt:
+              type: string
+              format: date-time
+              description: The date and time when the catalog was created
+              example: "2024-09-03T12:40:05.193Z"
+            updatedAt:
+              type: string
+              format: date-time
+              description: The date and time when the catalog was last updated
+              example: "2024-09-03T12:40:05.193Z"
+            title:
+              type: string
+              description: The title of the catalog
+              example: "How confident are you that you can commit to a 12-month lifestyle change program?"
+            values:
+              type: array
+              description: The values for the catalog options
+              items:
+                type: object
+                additionalProperties:
+                  type: string
+              example:
+                - Not Very Confident: "1"
+                - Moderately Confident: "5"
+                - Super Confident: "10"
+            active:
+              type: boolean
+              description: The active status of the catalog
+              example: true
+      required:
+        - question
+        - type
+        - status
+        - category
+
+    Participant:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        email:
+          type: string
+          format: email
+          example: johndoe@herbalife.com
+        phone:
+          type: string
+          example: "123456789"
+        participantID:
+          type: integer
+          example: 12345
+        distributor:
+          $ref: "#/components/schemas/Distributor"
+        magicLink:
+          type: string
+          format: uri
+          example: https://example.com/magic-link/abc123
+        isEnrolled:
+          type: boolean
+          example: true
+    Activity:
+      type: object
+      properties:
+        minutes:
+          type: string
+          description: Duration of the activity in minutes
+          example: "30"
+        weight:
+          type: string
+          description: Weight lifted during the activity
+          example: "75"
+        date:
+          type: string
+          format: date-time
+          description: Date of the activity session
+          example: "2024-10-09T10:00:00Z"
+        participant:
+          $ref: "#/components/schemas/Participant"
+        week:
+          type: string
+          format: date-time
+          description: The week in which the activity took place
+          example: "2024-10-01T00:00:00Z"
+        session:
+          $ref: "#/components/schemas/Session"
+          required:
+            - minutes
+            - weight
+            - date
+            - participant
+            - week
+            - session
+    Session:
+      type: object
+      properties:
+        cohort:
+          $ref: "#/components/schemas/Cohort"
+        date:
+          type: string
+          format: date-time
+          description: Date of the session
+          example: "2024-10-09T10:00:00Z"
+        sessionType:
+          type: string
+          enum:
+            - GENERAL
+            - MAKEUP
+          description: Type of the session
+          example: GENERAL
+        note:
+          type: string
+          description: Additional notes about the session
+          example: "This session is focused on general fitness."
+        attendedParticipants:
+          type: array
+          items:
+            $ref: "#/components/schemas/Participant"
+      required:
+        - date
+        - sessionType
+
+    Cohort:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the cohort
+          example: "Fitness Bootcamp"
+        startDate:
+          type: string
+          format: date-time
+          description: Start date of the cohort
+          example: "2024-01-01T09:00:00Z"
+        endDate:
+          type: string
+          format: date-time
+          description: End date of the cohort
+          example: "2024-12-31T17:00:00Z"
+        deliveryMode:
+          type: string
+          enum:
+            - ONLINE
+            - OFFLINE
+            - BOTH
+          description: Mode of delivery for the cohort
+          example: ONLINE
+        cohortID:
+          type: integer
+          description: Unique identifier for the cohort
+          example: 12345
+        # participants:
+        #   type: array
+        #   items:
+        #     $ref: "#/components/schemas/Participant"
+        distributor:
+          $ref: "#/components/schemas/Distributor"
+      required:
+        - name
+        - startDate
+        - endDate
+        - deliveryMode
+
+    Question:
+      type: object
+      properties:
+        question:
+          type: string
+          description: The actual question being asked.
+          example: "What is your current health condition?"
+        type:
+          type: string
+          enum:
+            - BOOLEAN
+            - NUMBER
+            - DESCRIPTIVE
+            - CATALOG
+            - RANGE
+            - LENGTH
+            - DATE
+          description: The type of the question.
+          example: BOOLEAN
+        status:
+          type: boolean
+          description: Whether the question is active or not.
+          example: true
+        addedToCDC:
+          type: boolean
+          description: Indicates if the question has been added to CDC.
+          example: false
+        cdcId:
+          type: string
+          description: CDC ID associated with the question.
+          example: "CDC12345"
+        disclaimer:
+          type: string
+          description: Disclaimer text for the question, if any.
+          example: "This information is confidential."
+        category:
+          type: string
+          enum:
+            - GENERAL
+            - HEALTH
+          description: The category the question belongs to.
+          example: HEALTH
+        catalog:
+          $ref: "#/components/schemas/Catalog"
+          description: Reference to a catalog item.
+    Catalog:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the catalog.
+          example: "CAT12345"
+        name:
+          type: string
+          description: Name of the catalog.
+          example: "Health Catalog"
+    Message:
+      type: string
+      description: Message is the message returned from the API
+      nullable: true
+    isEnrolled:
+      type: boolean
+      description: Status of participant's enrolment
+      nullable: false
+      example: true
+    DistributorLoginToken:
+      type: string
+      description: token for authentication of the distributor.
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLm15aGVyYmFsaWZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vaGVyYmFsaWZlbGlmZXN0eWxlLmNvbSIsInN1YiI6IlVTQVRFU1QzMjRAaGVyYmFsaWZlLmNvbSIsImlkIjoiNjZmNTIxYTllMzUzZDQwNGU5ZWQyYWE5IiwiZmlyc3ROYW1lIjoiLSIsImxhc3ROYW1lIjoiLSIsImVtYWlsIjoiVVNBVEVTVDMyNEBoZXJiYWxpZmUuY29tIiwiZXhwIjoxNzI3NDI3MzY5LCJpYXQiOjE3MjczNDA5NjksIm5iZiI6MTcyNzM0MDk2OSwianRpIjoiMTIzNDUifQ.7xEtNLhcZ2Nsjf7iWE6vKqU_jw4DQ7LHUhXRihjWtiE
+      required:
+        - token
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: Error code is the code returned from the API
+        errorMessage:
+          type: string
+          description: Error message is the message returned from the API
+        errorDescription:
+          type: string
+          description: Error description is the description of the error returned from the API
+
+  requestBodies:
+    QuestionData:
+      description: Data for creating a question
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              question:
+                type: string
+                description: The text of the question
+                example: "What is your Name?"
+              type:
+                type: string
+                description: The type of question
+                enum:
+                  - BOOLEAN
+                  - NUMBER
+                  - DESCRIPTIVE
+                  - CATALOG
+                  - RANGE
+                  - LENGTH
+                  - DATE
+                example: "DATE"
+              status:
+                type: boolean
+                description: The status of the question (active or not)
+                example: false
+              addedToCDC:
+                type: boolean
+                description: Indicates if the question is added to CDC
+                example: false
+              catalogId:
+                type: string
+                description: The ID of the catalog associated with the question
+                example: "66797d5b95741c4dbc178885"
+              category:
+                type: string
+                description: The category of the question
+                enum:
+                  - GENERAL
+                  - HEALTH
+                example: "GENERAL"
+              disclaimer:
+                type: string
+                description: Disclaimer related to the question
+                example: "Disclaimer about the Question"
+            required:
+              - question
+              - type
+              - status
+              - addedToCDC
+              - catalogId
+              - category
+    AdminQuestionData:
+      description: Schema for creating a question
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              question:
+                type: string
+                description: The text of the question
+                example: "Are you currently or previously\ndiagnosed with type 1 or type 2\ndiabetes?"
+              type:
+                type: string
+                description: The type of question
+                enum:
+                  - BOOLEAN
+                  - NUMBER
+                  - DESCRIPTIVE
+                  - CATALOG
+                  - RANGE
+                  - LENGTH
+                  - DATE
+                example: "BOOLEAN"
+              status:
+                type: boolean
+                description: The status of the question (active or not)
+                example: false
+              addedToCDC:
+                type: boolean
+                description: Indicates if the question is added to CDC
+                example: true
+              disclaimer:
+                type: string
+                description: Disclaimer related to the question
+                example: "I appreciate your interest in the Herbalife Lifestyle Program. While this program is intended for individuals not yet diagnosed with diabetes, you are still\nwelcome to join. Please understand this program is not designed to cure or reverse diabetes and should not replace professional medical advice or treatment..."
+              category:
+                type: string
+                description: The category of the question
+                enum:
+                  - GENERAL
+                  - HEALTH
+                example: "GENERAL"
+              catalog:
+                type: string
+                nullable: true
+                description: Reference to the associated catalog, can be null
+                example: null
+            required:
+              - question
+              - type
+              - status
+              - addedToCDC
+              - category
+
+    ActivityData:
+      description: Session data for a participant
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              minutes:
+                type: string
+                description: Duration of the session in minutes
+                example: "103"
+              weight:
+                type: string
+                description: Weight of the participant
+                example: "90"
+              magicLink:
+                type: string
+                format: uuid
+                description: Unique magic link identifier
+                example: "8b7ab820-b898-4a7d-80ab-f125c28d97a3"
+              sessionId:
+                type: string
+                description: Identifier for the session
+                example: "66d1bf1302d6bf5b9b8fcf16"
+              date:
+                type: string
+                format: date-time
+                description: Date and time of the session
+                example: "2024-11-26T05:46:04.894+00:00"
+            required:
+              - minutes
+              - weight
+              - magicLink
+              - sessionId
+              - date
+    LoginDistributor:
+      description: Get Participant by Id
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                $ref: "#/components/schemas/ParticipantId"
+      required: true
+    Email:
+      description: Create Participant URL
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+                description: The URL of the participant
+                example: "https://herbalife-lifestyle-program-user-dev.thewitslab.com/participant/24ecd8cf-d648-4143-8824-265bdd1b2fe9"
+            required:
+              - url
+    Reminder:
+      description: Participant ID
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The unique identifier of the participant
+                example: "66d1a7f702d6bf5b9b8fcf11"
+            required:
+              - id
+    CreateParticipant:
+      description: Create Participant
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: email of the Participant.
+                example: johndoe@herbalife.com
+              firstName:
+                type: string
+                description: first name of the participant.
+                example: John
+              lastName:
+                type: string
+                description: last name of the participant.
+                example: Doe
+              phone:
+                type: string
+                description: phone number of the participant.
+                example: "9310008439"
+            required:
+              - email
+              - firstName
+              - lastName
+
+      required: true
+    UpdateActivity:
+      description: Session data for a participant
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              minutes:
+                type: string
+                description: Duration of the session in minutes
+                example: "105"
+              weight:
+                type: string
+                description: Weight of the participant
+                example: "99"
+            required:
+              - minutes
+              - weight
+    CohortData:
+      description: Data for creating a cohort
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the cohort
+                example: "Soni ka Cohort 1"
+              startDate:
+                type: string
+                format: date-time
+                description: Start date of the cohort
+                example: "2024-08-22T05:46:04.894+00:00"
+              endDate:
+                type: string
+                format: date-time
+                description: End date of the cohort
+                example: "2024-07-20T13:03:28.690Z"
+              deliveryMode:
+                type: string
+                description: Mode of delivery for the cohort
+                enum:
+                  - ONLINE
+                  - OFFLINE
+                  - BOTH
+                example: "ONLINE"
+              distributorEmail:
+                type: string
+                format: email
+                description: Email address of the distributor
+                example: "gajendrameh-c@herbalife.com"
+            required:
+              - name
+              - startDate
+              - deliveryMode
+              - distributorEmail
+    UserData:
+      description: Schema for user data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the user
+                example: "John"
+              email:
+                type: string
+                format: email
+                description: The email of the user
+                example: "John@gmail.com"
+            required:
+              - name
+              - email
+
+  examples:
+    # 400
+    BadRequestError:
+      value:
+        errorCode: APG0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    BadRequestErrorBackend:
+      value:
+        errorCode: BCK0001
+        errorMessage: Bad Request
+        errorDescription: Input validation error. Provide a valid input data!
+    # 401
+    ApiKeyError:
+      value:
+        errorCode: APG0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    ApiKeyErrorBackend:
+      value:
+        errorCode: BCK0002
+        errorMessage: Unauthorized
+        errorDescription: Provide valid api key/token
+    # 403
+    Forbidden:
+      value:
+        errorCode: APG0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    ForbiddenBackend:
+      value:
+        errorCode: BCK0004
+        errorMessage: Forbidden
+        errorDescription: Authenticated but not authorized
+    # 404
+    NotFound:
+      value:
+        errorCode: APG0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    NotFoundBackend:
+      value:
+        errorCode: BCK0003
+        errorMessage: Not Found
+        errorDescription: Resource Not Available
+    # 405
+    MethodNotAllowed:
+      value:
+        errorCode: APG0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    MethodNotAllowedBackend:
+      value:
+        errorCode: BCK0005
+        errorMessage: Method Not Allowed
+        errorDescription: Provide a valid method
+    # 406
+    NotAcceptable:
+      value:
+        errorCode: APG0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    NotAcceptableBackend:
+      value:
+        errorCode: BCK0006
+        errorMessage: Not Acceptable
+        errorDescription: Not Acceptable
+    # 408
+    RequestTimeout:
+      value:
+        errorCode: APG0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    RequestTimeoutBackend:
+      value:
+        errorCode: BCK0008
+        errorMessage: Request Timeout
+        errorDescription: Request Timeout
+    # 409
+    Conflict:
+      value:
+        errorCode: APG0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    ConflictBackend:
+      value:
+        errorCode: BCK0009
+        errorMessage: Conflict
+        errorDescription: Conflict while updating existing resouce
+    # 415
+    UnsupportedMediaType:
+      value:
+        errorCode: APG0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    UnsupportedMediaTypeBackend:
+      value:
+        errorCode: BCK0010
+        errorMessage: Unsupported Media Type
+        errorDescription: Unsupported Media Type
+    # 422
+    UnprocessableEntity:
+      value:
+        errorCode: APG0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    UnprocessableEntityBackend:
+      value:
+        errorCode: BCK0011
+        errorMessage: Unprocessable Entity
+        errorDescription: Unprocessable Entity
+    # 429
+    TooManyRequests:
+      value:
+        errorCode: APG0012
+        errorMessage: Too Many Requests
+        errorDescription: Request rate limit exceeded
+    TooManyRequestsBackend:
+      value:
+        errorCode: BCK0012
+        errorMessage: Too Many Requests
+        errorDescription: Request rate limit exceeded
+    # 500
+    InternalServerError:
+      value:
+        errorCode: APG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    InternalServerErrorBackend:
+      value:
+        errorCode: BCG0013
+        errorMessage: Internal Server Error
+        errorDescription: Internal Server Error
+    # 501
+    NotImplemented:
+      value:
+        errorCode: APG0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    NotImplementedBackend:
+      value:
+        errorCode: BCK0014
+        errorMessage: Not Implemented
+        errorDescription: Not Implemented
+    # 502
+    BadGateway:
+      value:
+        errorCode: APG0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    BadGatewayBackend:
+      value:
+        errorCode: BCK0015
+        errorMessage: Bad Gateway
+        errorDescription: Bad response from backend
+    # 503
+    ServiceUnavailable:
+      value:
+        errorCode: APG0016
+        errorMessage: Service Unavailable
+        errorDescription: Server is not ready to handle the request
+    ServiceUnavailableBackend:
+      value:
+        errorCode: BCK0016
+        errorMessage: ServiceUnavailable
+        errorDescription: Server is not ready to handle the request
+    # 504
+    GatewayTimeout:
+      value:
+        errorCode: APG0017
+        errorMessage: Gateway Timeout
+        errorDescription: Gateway Timeout
+    GatewayTimeoutBackend:
+      value:
+        errorCode: BCK0017
+        errorMessage: Gateway Timeout
+        errorDescription: Server is not ready to handle the request
